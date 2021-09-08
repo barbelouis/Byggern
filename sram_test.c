@@ -1,5 +1,16 @@
+#define FOSC 4915200// Clock Speed
+#define F_CPU 4915200
+#define BAUD 9600
+#define MYUBRR FOSC/16/BAUD-1
+#include <util/delay.h>  
+#include <avr/io.h>
+#include <stdio.h>
+
+
 #include <stdlib.h>
 #include <stdint.h>
+#include </home/louis/Documents/NTNU/TTK4155/Byggern/UART_driver.h>
+#include <stdio.h>
     void SRAM_test(void)
     {
 		volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
@@ -35,9 +46,11 @@
         printf("SRAM test completed with \n%4d errors in write phase and \n%4d errors in retrieval phase\n\n", write_errors, retrieval_errors);
 }
 
-
 void main( void )
 {
-
+MCUCR =0b10000000;
+SFIOR =0b00100000; // Uses of jtag on port C (cf. page 32)
+USART_Init( MYUBRR );
+printf("Hello, world!\n");
 SRAM_test();
 }
