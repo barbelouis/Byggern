@@ -48,8 +48,11 @@
 
 void main( void )
 {
-MCUCR =0b10000000;
-SFIOR =0b00100000; // Uses of jtag on port C (cf. page 32)
+//MCUCR =0b10000000;
+MCUCR |= (1 << SRE);
+//MCUCR &= ~(1 << SRE);
+SFIOR |= (1 << XMM2);
+//SFIOR =0b00100000; // Uses of jtag on port C (cf. page 32)
 USART_Init( MYUBRR );
 printf("Hello, world!\n");
 SRAM_test();
