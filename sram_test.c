@@ -45,7 +45,7 @@
         }
         printf("SRAM test completed with \n%4d errors in write phase and \n%4d errors in retrieval phase\n\n", write_errors, retrieval_errors);
 }
-
+/*
 void main( void )
 {
 //MCUCR =0b10000000;
@@ -56,4 +56,4 @@ SFIOR |= (1 << XMM2);
 USART_Init( MYUBRR );
 printf("Hello, world!\n");
 SRAM_test();
-}
+}*/

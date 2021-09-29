@@ -4,7 +4,7 @@
  
 #include <avr/io.h>
 #include <util/delay.h>                // for _delay_ms()
- 
+ /*
 int main(void)
 {
     DDRC = 0x01;                       // initialize port C
@@ -25,4 +25,4 @@ int main(void)
         _delay_ms(1000);
                         
     }
-}
+}*/
