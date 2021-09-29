@@ -3,8 +3,8 @@
 #define BAUD 9600
 #define MYUBRR FOSC/16/BAUD-1
 
-#include </home/louis/Documents/NTNU/TTK4155/Byggern/UART_driver.h>
-#include </home/louis/Documents/NTNU/TTK4155/Byggern/ADC_driver.h>
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/UART_driver.h"
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/ADC_driver.h"
 //#include </home/louis/Documents/NTNU/TTK4155/Byggern/joystick_slider_driver.h>
 #include <avr/io.h>
 
@@ -22,8 +22,11 @@ int main(void){
 
     ADC_init();
 
-    read_ADC_input();
-    print_ADC_values();
+    while(1){
+    //read_ADC_input();
+    //print_ADC_values();
+    print_sensors();
+    }
 }
 
 

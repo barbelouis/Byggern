@@ -1,6 +1,6 @@
-#include </home/louis/Documents/NTNU/TTK4155/Byggern/ADC_driver.h>
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/ADC_driver.h"
 #include <stdio.h>
-#include </home/louis/Documents/NTNU/TTK4155/Byggern/joystick_slider_driver.h>
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/joystick_slider_driver.h"
 
 
 int get_joystick_vertical_analog_position(){

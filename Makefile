@@ -1,5 +1,5 @@
 # List all source files to be compiled; separate with space
-SOURCE_FILES := main.c UART_driver.c ADC_driver.c #joystick_slider_driver.c #$(shell find . -name '*.c')
+SOURCE_FILES := $(shell find . -name '*.c')#main.c UART_driver.c ADC_driver.c #joystick_slider_driver.c #$(shell find . -name '*.c')
 
 # Set this flag to "yes" (no quotes) to use JTAG; otherwise ISP (SPI) is used
 PROGRAM_WITH_JTAG := yes
