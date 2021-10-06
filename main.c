@@ -5,8 +5,14 @@
 
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/UART_driver.h"
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/ADC_driver.h"
-//#include </home/louis/Documents/NTNU/TTK4155/Byggern/joystick_slider_driver.h>
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/joystick_slider_driver.h"
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/OLED_driver.h"
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/OLED_implementation.h"
+//#include "/home/louis/Documents/NTNU/TTK4155/Byggern/fonts.h"
 #include <avr/io.h>
+#include <util/delay.h> 
+#include <stdio.h>
+#include <stdlib.h>
 
 
 
@@ -22,11 +28,33 @@ int main(void){
 
     ADC_init();
 
+    OLED_init();
+    
+    
+    OLED_reset();
+
+
+     
+    int selected_option=1;
+    
+    
+    struct Option current_option=define_options();
+    struct Menu menu={define_options(),1};
+    
     while(1){
-    //read_ADC_input();
-    //print_ADC_values();
-    print_sensors();
+
+
+        _delay_ms(500);
+        menu=make_menu(current_option,selected_option);
+        current_option= menu.current_option;
+        selected_option= menu.selected_option;
+       
+
+    
     }
+
 }
+
+
 
 

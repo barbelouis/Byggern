@@ -16,7 +16,7 @@ char get_joystick_direction(){
     int vertical = get_joystick_vertical_analog_position();
     int horizontal = get_joystick_horizontal_analog_position();
     
-    if (vertical > 230){
+    if (vertical > 225){
         return 'T';
     }
     else if (vertical <25){
