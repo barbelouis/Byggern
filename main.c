@@ -39,14 +39,14 @@ int main(void){
     
     
     struct Option current_option=define_options();
-    struct Menu menu={define_options(),1};
+    struct Menu menu;//={define_options(),1};
     
     while(1){
 
 
-        _delay_ms(500);
+        _delay_ms(150);
         menu=make_menu(current_option,selected_option);
-        current_option= menu.current_option;
+        current_option=menu.current_option;
         selected_option= menu.selected_option;
        
 

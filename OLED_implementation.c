@@ -3,6 +3,12 @@
 #include <avr/io.h>
 #include <stdio.h>
 
+static struct Option option3 = {NULL,"C:","CA","CB","CC",NULL,NULL,NULL};
+static struct Option option2 = {NULL,"B:","BA","BB","BC",NULL,NULL,NULL};
+static struct Option option1 = {NULL,"A:","AA","AB","AC",NULL,NULL,NULL};
+static struct Option option0 = {NULL,"Options:","A","B","C",NULL,NULL,NULL};
+
+
 void make_options(char* title, int cursorPosition, char* o1, char* o2, char* o3){
 
     
@@ -62,10 +68,6 @@ void clean_selected(){
 }
 
 struct Option define_options(){
-struct Option option3 = {NULL,"C:","CA","CB","CC",NULL,NULL,NULL};
-struct Option option2 = {NULL,"B:","BA","BB","BC",NULL,NULL,NULL};
-struct Option option1 = {NULL,"A:","AA","AB","AC",NULL,NULL,NULL};
-struct Option option0 = {NULL,"Options:","A","B","C",NULL,NULL,NULL};
 
 option3.previous_option=&option0;
 option3.next_1=&option3;
@@ -95,6 +97,7 @@ return option0;
 
 struct Menu make_menu(struct Option current_option,int selected_option){
 
+        
 
 //Define input for joystick push button
     DDRB &= 0x00;
@@ -135,9 +138,9 @@ struct Menu make_menu(struct Option current_option,int selected_option){
             current_option=*current_option.previous_option;
             OLED_reset();
        }
-       printf("\n next option: ");
+       printf("\n next: ");
        printf(current_option.title);
-       printf("\n selected_option: ");
+       printf("\n selected: ");
        printf("%d",selected_option);
         struct Menu new_menu={current_option,selected_option};
        return new_menu;
