@@ -9,7 +9,11 @@ void MCP2515_init(){
 void MCP2515_read(){
         
         DDRB = 0x01;                       // initialize port B
-        PORTB = 0b00000000;            // PB0 = Low
+        PORTB &= ~(1 << PINB4);  // SS Low
 
-///to complete
+
+
+        ///to complete
+
+        PORTB |= (1 << PINB4); // SS High
 }
