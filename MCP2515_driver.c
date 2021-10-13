@@ -6,12 +6,13 @@
 
 
 uint8_t MCP2515_init(){
-        DDRB = 0x01; // initialize port B
+       // DDRB = 0x01; // initialize port B
 
-        MCP2515_reset();
+        //MCP2515_reset();
 ///////////////Extract from the lab documents//////////////////////////
         
         SPI_init () ; // Initialize SPI
+        SPI_MasterInit(); // Initialize SPI Master
         MCP2515_reset () ; // Send reset - command
         // Self - test
         uint8_t value = MCP2515_read ( MCP_CANSTAT);
@@ -41,7 +42,7 @@ void MCP2515_write(uint8_t address, int lenght, char* data ){
         SPI_write ( MCP_WRITE ); // Send read instruction 
         SPI_write ( address); // Send address
         for (int i = 0; i < lenght; i++){
-        SPI_write(data[i]); // send one extra byte
+        SPI_write(data[i]); // send data
         }
         PORTB |= (1 << CAN_CS); // Deselect CAN - controller
 }
@@ -51,14 +52,16 @@ void MCP2515_request_send(){
         PORTB |= (1 << CAN_CS); // Deselect CAN - controller
         
 }
-void MCP2515_read_status(){
+uint8_t MCP2515_read_status(){
         
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
         SPI_write(MCP_READ_STATUS);  // write instruction read status (0xa0) to MCP2515 through SPI
         PORTB |= (1 << CAN_CS); // Deselect CAN - controller
+        return MCP2515_read(0x2c);
 }
 void MCP2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data){
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
+        SPI_write(MCP_BITMOD);
         SPI_write(address);
         SPI_write(mask);
         SPI_write(data);

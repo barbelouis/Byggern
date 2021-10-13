@@ -2,10 +2,10 @@
 #define SPI_DRIVER_H
 
 #define DDR_SPI DDRB
-#define DD_MISO PB6
-#define DD_MOSI PB5
-#define DD_SCK PB7
-#define DD_SS PB4
+#define DD_MISO PINB6
+#define DD_MOSI PINB5
+#define DD_SCK PINB7
+#define DD_SS PINB4
 
 #include <stdint.h>
 

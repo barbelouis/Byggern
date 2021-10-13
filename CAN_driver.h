@@ -1,17 +1,17 @@
 #ifndef CAN_DRIVER_H
 #define CAN_DRIVER_H
 
-
+int flag;
 
 struct Message
 {
-    char* id;
+    uint16_t id;
     int length;
-    char* data;
+    char data[8];
 };
 
 void CAN_init();
 void CAN_send(struct Message message);
-struct Message CAN_receive();
+void CAN_receive(struct Message *message);
 
 #endif 

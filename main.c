@@ -9,6 +9,9 @@
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/OLED_driver.h"
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/OLED_implementation.h"
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/SPI_driver.h"
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/MCP2515_driver.h"
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/CAN_driver.h"
+
 //#include "/home/louis/Documents/NTNU/TTK4155/Byggern/fonts.h"
 #include <avr/io.h>
 #include <util/delay.h> 
@@ -42,18 +45,38 @@ int main(void){
     struct Option current_option=define_options();
     struct Menu menu;//={define_options(),1};
     
+
+
+
+
+       
+    CAN_init();
+    struct Message message={0b00000000111,2,"ab"};
+    struct Message received_message;
+    
+
+    
+
     while(1){
-
-
         _delay_ms(150);
         menu=make_menu(current_option,selected_option);
         current_option=menu.current_option;
         selected_option= menu.selected_option;
-       
-       SPI_init();
-       SPI_MasterInit();
-       SPI_write(0b00101000);
+        CAN_send(message);
+        printf("\nmessage sent\n");
+        if(flag|1){
+            printf("Interrupt received\n");
+            uint8_t status;
+            status= MCP2515_read_status();
+            if((1 & status)|1){
+                CAN_receive(&received_message);
+                printf("message received: ");
 
+                printf(received_message.data[0]);
+            }
+            
+        }
+    
     
     }
 

@@ -138,10 +138,11 @@ struct Menu make_menu(struct Option current_option,int selected_option){
             current_option=*current_option.previous_option;
             OLED_reset();
        }
+       /*
        printf("\n next: ");
        printf(current_option.title);
        printf("\n selected: ");
-       printf("%d",selected_option);
+       printf("%d",selected_option);*/
         struct Menu new_menu={current_option,selected_option};
        return new_menu;
 }

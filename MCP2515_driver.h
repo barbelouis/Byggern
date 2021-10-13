@@ -164,7 +164,7 @@ uint8_t MCP2515_init();
 uint8_t MCP2515_read(uint8_t address);
 void MCP2515_write(uint8_t address, int lenght, char* data );
 void MCP2515_request_send();
-void MCP2515_read_status();
+uint8_t MCP2515_read_status();
 void MCP2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data);
 void MCP2515_reset();
 
