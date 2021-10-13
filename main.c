@@ -8,6 +8,7 @@
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/joystick_slider_driver.h"
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/OLED_driver.h"
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/OLED_implementation.h"
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/SPI_driver.h"
 //#include "/home/louis/Documents/NTNU/TTK4155/Byggern/fonts.h"
 #include <avr/io.h>
 #include <util/delay.h> 
@@ -49,6 +50,9 @@ int main(void){
         current_option=menu.current_option;
         selected_option= menu.selected_option;
        
+       SPI_init();
+       SPI_MasterInit();
+       SPI_write(0b00101000);
 
     
     }

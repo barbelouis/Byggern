@@ -5,8 +5,10 @@
 #include <stdio.h>
 
 void SPI_init(){
+//SPI mode to 0
 SPCR &= ~(1 << CPOL);
 SPCR &= ~(1 << CPHA);
+
 }
 
 ///extract from the Atmega162 documentation/
@@ -17,14 +19,19 @@ void SPI_MasterInit(void)
 DDR_SPI = (1<<DD_MOSI)|(1<<DD_SCK);
 /* Enable SPI, Master, set clock rate fck/16 */
 SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);
+/// 
+DDRB= 0x01;
+
 }
 void SPI_MasterTransmit(char cData)
 {
+
 /* Start transmission */
 SPDR = cData;
 /* Wait for transmission complete */
-while(!(SPSR & (1<<SPIF)))
-;
+printf("before while \n");
+while(!(SPSR & (1<<SPIF)));
+printf("After while \n");
 }
 
 
@@ -42,4 +49,13 @@ while(!(SPSR & (1<<SPIF)))
 ;
 /* Return data register */
 return SPDR;
+}
+
+
+void SPI_write(uint8_t data ){
+    SPI_MasterTransmit(data);
+}
+
+uint8_t SPI_read(){
+    return SPI_SlaveReceive();
 }
