@@ -3,30 +3,41 @@
 #include <util/delay.h>  
 #include <avr/io.h>
 #include <stdio.h>
+#include <avr/interrupt.h>
 
 //int flag=0;
 
 void CAN_init(){
 
-    //////////////////////////////////////////:
-
-    MCUCR |= (1<<ISC01 ) ;
-    MCUCR &= ~(1<<ISC00 );
-    SREG |= (1<<7);
-
-    GICR |= (1<<INT0 ) ;
-    DDRD &= ~(1<<PIND2);
-
-    ///////////////////////////////////////////
+    DDRD &= ~(1<<PD2);
     MCP2515_init(); //MCP2515 Init
     _delay_ms(1000);
    // MCP2515_bit_modify(MCP_CANINTE,0b00000111,0b00000100); //set conf mod MCP2515_bit_modify(MCP_CANINTE,0b00000111,0b00000100); //set RX0IE to 1
 
-    MCP2515_bit_modify(MCP_CANINTE,0b00000011,0b00000011); //set RX0IE to 1
+     //tests/
+    MCP2515_write(MCP_CANINTE,8,0b00111111);
+
+
     //set the MCP2515 in loopback mode
     MCP2515_bit_modify(MCP_CANCTRL,0b11100000,0b01000000); //Set REQOP0=0, REQOP1=1, REQOP2=0
 
+
+     //////////////////////////////////////////:
+    cli();
+    MCUCR |= (1<<ISC01 ) ;
+    MCUCR &= ~(1<<ISC00 );
+    //MCUCR &= ~(0b11<<ISC00);
+    SREG |= (1<<7);
+
+    GICR |= (1<<INT0 ) ;
     
+    sei();
+    MCP2515_write(MCP_CANINTF,8,0x00);
+    ///////////////////////////////////////////
+
+    //MCP2515_bit_modify(MCP_CANINTE,0b00000001,0b00000001); //set RX0IE to 1
+   
+
 }
 
 void CAN_send(struct Message message){
@@ -43,9 +54,10 @@ void CAN_send(struct Message message){
 
     //write the data in the associated register 
     //with the good lenght and beeing carefull to consecutive registers
-    for(int i=0; i<message.length;i++){
-    MCP2515_write(0x36+i, 1 , message.data[i]);
-    }
+   // for(int i=0; i<message.length;i++){
+  //  MCP2515_write(0x36+i, 1 , message.data[i]);
+//}
+    MCP2515_write(0x36, message.length, message.data);
 
     printf("after last write\n");
     // Request to send
@@ -57,7 +69,7 @@ void CAN_receive(struct Message *message){
 
 
 
-    
+    printf("In CAN receive\n");
     //MCP2515_bit_modify(MCP_CANINTF,0b00000001,0b00000001); // set RX0IF to 1
 
 
@@ -73,8 +85,12 @@ void CAN_receive(struct Message *message){
     for(int i=0; i<message->length;i++){
         message->data[i]=MCP2515_read(0x66+i); //0x66
     }
+    printf("%d",MCP_CANINTF);
     MCP2515_bit_modify(MCP_CANINTF,0b00000001,0b00000000); 
     flag=0;
+    printf("flag to 0\n");
+    printf("%d",MCP_CANINTF);
+    printf("\n");
 }
 
 
@@ -82,3 +98,4 @@ ISR(INT0_vect){
     flag=1;
 }
 
+ISR(BADISR_vect){}

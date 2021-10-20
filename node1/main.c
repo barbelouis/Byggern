@@ -17,6 +17,7 @@
 #include <util/delay.h> 
 #include <stdio.h>
 #include <stdlib.h>
+#include <avr/interrupt.h>
 
 
 
@@ -51,6 +52,7 @@ int main(void){
 
        printf("reset\n");
     CAN_init();
+    ADC_init();
     printf("after can init\n");
     struct Message message={0b00000000111,2,"ab"};
     struct Message received_message;
@@ -67,15 +69,17 @@ int main(void){
         CAN_send(message);
         printf("\nmessage sent\n");
        
-        if(flag){
+        if(flag|1){
             printf("Interrupt received\n");
             uint8_t status;
             status= MCP2515_read_status();
-            if((1 & status)){
+            if((1 & status)|1){
+                cli();
                 CAN_receive(&received_message);
+                sei();
                 printf("message received: ");
-
-                printf("%x",received_message.data[0]);
+                printf(received_message.data[0]);
+                //printf("%x",received_message.data);
             }
             
         }
