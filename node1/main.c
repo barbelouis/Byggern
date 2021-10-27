@@ -22,6 +22,11 @@
 
 
 int main(void){
+
+    printf("==============\n");
+    printf("    RESET\n");
+    printf("==============\n");
+
     //Set register for use of JTAG
     //MCUCR =0b1xxxxxxx;
     MCUCR |= (1 << SRE);
@@ -31,7 +36,7 @@ int main(void){
     //init USART for communicqtion and printing
     USART_Init( MYUBRR );
 
-    ADC_init();
+    //ADC_init();
 
     OLED_init();
     
@@ -48,18 +53,13 @@ int main(void){
     
 
 
-   //ADC_init();
     
-       printf("reset\n");
+       
     CAN_init();
-    //SPI_init();
+    
+    struct Message message={0b00000000111,3,"abc"};
 
-    
-    printf("after can init\n");
-    
-    //uint8_t arr [3] = {1,1,1};
-    struct Message message={0b00000000111,3,{'a','b','c'}};
-    //struct Message message={0b00000000111,3,"abc"};
+
     struct Message received_message;
 
 
@@ -67,21 +67,19 @@ int main(void){
                     printf("%x ",message.data[i]);
                     
                 } 
-     CAN_send(message);
-     printf("after can send\n");
+    // CAN_send(message);
     
 
     while(1){
         //continue;
-        _delay_ms(150);
+        printf("==== LOOP ====\n\n");
+        _delay_ms(3000);
         /*
         menu=make_menu(current_option,selected_option);
         current_option=menu.current_option;
         selected_option= menu.selected_option;
         */
         CAN_send(message);
-       // printf(message.data);
-       // printf("\nmessage sent\n");
        
         if(flag|1){
           //  printf("Interrupt received\n");
@@ -92,23 +90,23 @@ int main(void){
             status= MCP2515_read(MCP_CANINTF);
             printf("status: %x\n",status);
             if((0x3 & status)){
-                cli();
+                //cli();
                 CAN_receive(&received_message,status & 0x3);
                 //CAN_receive(&received_message,0x2);
-                sei();
-                printf("message length: %d\n",received_message.length);
-                printf("received: ");
-                printf("%x ",received_message.data);
-                
+                //sei();
+                printf("\n");
+                printf("received ID: %x\n",received_message.id);
+                printf("received length: %d\n",received_message.length);
+                printf("received message: ");
+           //     printf("%x ",received_message.data);
+              
                 for(int i=0; i< received_message.length; i++){
-                    printf("%x ",received_message.data[i]);
+                    printf("%x",received_message.data[i]);
                     
                 } 
-            
-                
-                //printf(received_message.data);
-                printf("\n");
-                //printf("%x",received_message.data);
+
+                printf("\n\n");
+
             }
             
         }
@@ -116,14 +114,6 @@ int main(void){
     
     
     }
-
-
-    
-/*
-   while(1){
-       _delay_ms(5);
-       SPI_write('a');
-   }*/
 
 }
 

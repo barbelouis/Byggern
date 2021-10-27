@@ -8,15 +8,16 @@
 //int flag=0;
 
 void CAN_init(){
-
+/*
     DDRD &= ~(1<<PD2);
+    */
     MCP2515_init(); //MCP2515 Init
     _delay_ms(1000);
    // MCP2515_bit_modify(MCP_CANINTE,0b00000111,0b00000100); //set conf mod MCP2515_bit_modify(MCP_CANINTE,0b00000111,0b00000100); //set RX0IE to 1
 
      //tests/
     //MCP2515_write(MCP_CANINTE,1,0b00000011);
-    MCP2515_bit_modify(MCP_CANINTE,0b00011111,0b00000011);
+   /* MCP2515_bit_modify(MCP_CANINTE,0b00011111,0b00000011); */
     // disable tx interrupt TO DO
     
 
@@ -30,7 +31,7 @@ void CAN_init(){
         printf (" MCP2515 is NOT in LoopBack mode after reset !\n");
                 return 1;
         }
-
+/*
      //////////////////////////////////////////:
     cli();
     MCUCR |= (1<<ISC01 ) ;
@@ -43,6 +44,7 @@ void CAN_init(){
     sei();
     MCP2515_write(MCP_CANINTF,2,0x00);
     ///////////////////////////////////////////
+    */
 
     //MCP2515_bit_modify(MCP_CANINTE,0b00000001,0b00000001); //set RX0IE to 1
    
@@ -52,7 +54,12 @@ void CAN_init(){
 void CAN_send(struct Message message){
     
     //write the id in the associated register
-    MCP2515_write(0x31, 2 , message.id);  // 11 bits => 2 bytes
+    //MCP2515_write(0x32, 1 , message.id);  // 11 bits => 2 bytes
+    //MCP2515_write(0x31, 2 , 0b1111111111100000);
+    MCP2515_write(0x31, 1 , 0xff);
+    MCP2515_write(0x32, 1 , 0b11100000);
+    printf("sent ID: %x\n",message.id);
+    //uint8_t= message.id
    // MCP2515_write1(0x31,message.id);
 // to sep in two
     //printf("after first write\n");
@@ -61,7 +68,7 @@ void CAN_send(struct Message message){
     
     MCP2515_write(0x35, 1 , message.length); // 8 bits => 1 byte
     //MCP2515_write1(0x35, message.length);
-    printf("CAN send message length: %d\n",message.length);
+    printf("sent length: %d\n",message.length);
 
     //write the data in the associated register 
     //with the good lenght and beeing carefull to consecutive registers
@@ -70,10 +77,7 @@ void CAN_send(struct Message message){
 //}
     MCP2515_write(0x36, message.length, message.data);
     
-    for(int i=0; i< message.length; i++){
-                    printf("%x ",message.data[i]);
-                    
-                }
+    
     /*
     for (int i=0; i<message.length;i++){
     MCP2515_write1(0x36, message.data);
@@ -83,6 +87,13 @@ void CAN_send(struct Message message){
     // Request to send
     MCP2515_request_send();
     //("after request\n");
+
+    printf("sent message: ");
+    for(int i=0; i< message.length; i++){
+                    printf("%c",message.data[i]);
+                    
+                }
+    printf("\n\n");
 }
 
 void CAN_receive(struct Message *message,int bufferNb){
@@ -97,6 +108,7 @@ void CAN_receive(struct Message *message,int bufferNb){
     //read ID
     uint16_t id0=MCP2515_read(MCP_RXB0SIDH); // 0x61
     uint16_t id1=MCP2515_read(0x62);
+    printf("id0: %x | id1: %x\n",id0,id1);
     uint16_t id = (id1 << 8)|id0; 
     message->id=id; 
     //read data length
@@ -106,13 +118,15 @@ void CAN_receive(struct Message *message,int bufferNb){
     for(int i=0; i<message->length;i++){
         message->data[i]=MCP2515_read(0x66+i); //0x66
     }
-    MCP2515_bit_modify(MCP_CANINTF,0b00000001,0b00000000); 
+   // MCP2515_bit_modify(MCP_CANINTF,0b00000001,0b00000000); 
+   // flag=0;
     }
     else if (bufferNb==0x2){
         ///////////// read message//////////////////////////////    
     //read ID
     uint16_t id0=MCP2515_read(MCP_RXB1SIDH); // 0x71
     uint16_t id1=MCP2515_read(0x72);
+    printf("id0: %x | id1: %x\n",id0,id1);
     uint16_t id = (id1 << 8)|id0; 
     message->id=id; 
     //read data length
@@ -122,21 +136,23 @@ void CAN_receive(struct Message *message,int bufferNb){
     for(int i=0; i<message->length;i++){
         message->data[i]=MCP2515_read(0x76+i); //0x76
     }
-MCP2515_bit_modify(MCP_CANINTF,0b00000010,0b00000000); 
+//MCP2515_bit_modify(MCP_CANINTF,0b00000010,0b00000000); 
+//flag=0;
     }
     
     //printf("%d",MCP_CANINTF);
     //printf("\n");
     
-    flag=0;
+    
     //printf("flag to 0\n");
     //printf("%d",MCP_CANINTF);
     //printf("\n");
 }
 
-
+/*
 ISR(INT0_vect){
     flag=1;
 }
 
 ISR(BADISR_vect){}
+*/
