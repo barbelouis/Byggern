@@ -7,11 +7,11 @@ struct Message
 {
     uint16_t id;
     int length;
-    char data[8];
+    uint8_t data[8];
 };
 
 void CAN_init();
 void CAN_send(struct Message message);
-void CAN_receive(struct Message *message);
+void CAN_receive(struct Message *message,int bufferNb);
 
 #endif 

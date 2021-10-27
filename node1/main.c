@@ -31,7 +31,7 @@ int main(void){
     //init USART for communicqtion and printing
     USART_Init( MYUBRR );
 
-    //ADC_init();
+    ADC_init();
 
     OLED_init();
     
@@ -48,44 +48,82 @@ int main(void){
     
 
 
-
-
+   //ADC_init();
+    
        printf("reset\n");
     CAN_init();
-    ADC_init();
-    printf("after can init\n");
-    struct Message message={0b00000000111,2,"ab"};
-    struct Message received_message;
+    //SPI_init();
+
     
+    printf("after can init\n");
+    
+    //uint8_t arr [3] = {1,1,1};
+    struct Message message={0b00000000111,3,{'a','b','c'}};
+    //struct Message message={0b00000000111,3,"abc"};
+    struct Message received_message;
+
+
+    for(int i=0; i< message.length; i++){
+                    printf("%x ",message.data[i]);
+                    
+                } 
      CAN_send(message);
      printf("after can send\n");
     
 
     while(1){
+        //continue;
         _delay_ms(150);
+        /*
         menu=make_menu(current_option,selected_option);
         current_option=menu.current_option;
         selected_option= menu.selected_option;
+        */
         CAN_send(message);
-        printf("\nmessage sent\n");
+       // printf(message.data);
+       // printf("\nmessage sent\n");
        
         if(flag|1){
-            printf("Interrupt received\n");
+          //  printf("Interrupt received\n");
             uint8_t status;
-            status= MCP2515_read_status();
-            if((1 & status)|1){
+            //status= MCP2515_read_status();
+            
+
+            status= MCP2515_read(MCP_CANINTF);
+            printf("status: %x\n",status);
+            if((0x3 & status)){
                 cli();
-                CAN_receive(&received_message);
+                CAN_receive(&received_message,status & 0x3);
+                //CAN_receive(&received_message,0x2);
                 sei();
-                printf("message received: ");
-                printf(received_message.data[0]);
+                printf("message length: %d\n",received_message.length);
+                printf("received: ");
+                printf("%x ",received_message.data);
+                
+                for(int i=0; i< received_message.length; i++){
+                    printf("%x ",received_message.data[i]);
+                    
+                } 
+            
+                
+                //printf(received_message.data);
+                printf("\n");
                 //printf("%x",received_message.data);
             }
             
         }
+        
     
     
     }
+
+
+    
+/*
+   while(1){
+       _delay_ms(5);
+       SPI_write('a');
+   }*/
 
 }
 

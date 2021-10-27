@@ -6,10 +6,10 @@
 void ADC_init(){
     ///////// Set up internal clk on PD4 /////////////////////
     DDRD |= (1 << DDD4);
-    TCCR3B |= ( 1<< WGM32);
-    TCCR3B |= ( 1<< CS30);
-    OCR3A = 0x00;
-    TCCR3A |= (1 << COM3A0);
+    TCCR1B |= ( 1<< WGM32);
+    TCCR1B |= ( 1<< CS30);
+    OCR1A = 0x00;
+    TCCR1A |= (1 << COM1A0);
     /////////////////////////////////////////////////////////
 }
 
