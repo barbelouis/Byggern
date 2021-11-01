@@ -53,11 +53,16 @@ void CAN_init(){
 
 void CAN_send(struct Message message){
     
+    
+    uint8_t idh= message.id>>3;
+    uint8_t idl= (message.id & 0x7)<<5;
+    //printf("IDH: %x  IDL: %x\n",idh,idl);
+
     //write the id in the associated register
     //MCP2515_write(0x32, 1 , message.id);  // 11 bits => 2 bytes
     //MCP2515_write(0x31, 2 , 0b1111111111100000);
-    MCP2515_write(0x31, 1 , 0xff);
-    MCP2515_write(0x32, 1 , 0b11100000);
+    MCP2515_write(0x31, idh);
+    MCP2515_write(0x32, idl);
     printf("sent ID: %x\n",message.id);
     //uint8_t= message.id
    // MCP2515_write1(0x31,message.id);
@@ -66,7 +71,7 @@ void CAN_send(struct Message message){
 
     //write the lenght in the associated register
     
-    MCP2515_write(0x35, 1 , message.length); // 8 bits => 1 byte
+    MCP2515_write(0x35, message.length); // 8 bits => 1 byte
     //MCP2515_write1(0x35, message.length);
     printf("sent length: %d\n",message.length);
 
@@ -75,7 +80,7 @@ void CAN_send(struct Message message){
    // for(int i=0; i<message.length;i++){
   //  MCP2515_write(0x36+i, 1 , message.data[i]);
 //}
-    MCP2515_write(0x36, message.length, message.data);
+    MCP2515_write_array(0x36, message.length, message.data);
     
     
     /*
@@ -106,19 +111,20 @@ void CAN_receive(struct Message *message,int bufferNb){
     if(bufferNb==0x1){
         ///////////// read message//////////////////////////////    
     //read ID
-    uint16_t id0=MCP2515_read(MCP_RXB0SIDH); // 0x61
-    uint16_t id1=MCP2515_read(0x62);
-    printf("id0: %x | id1: %x\n",id0,id1);
-    uint16_t id = (id1 << 8)|id0; 
+    uint16_t idh=MCP2515_read(MCP_RXB0SIDH); // 0x61
+    uint16_t idl=MCP2515_read(0x62);
+    //printf("idh: %x | idl: %x\n",idh,idl);
+    uint16_t id = (idh << 8)|idl; 
+    id= id>>5;
     message->id=id; 
     //read data length
     message->length=MCP2515_read(0x65); //0x65
-    printf("CAN receive 0 message length: %d\n",message->length);
+    //printf("CAN receive 0 message length: %d\n",message->length);
     //read data
     for(int i=0; i<message->length;i++){
         message->data[i]=MCP2515_read(0x66+i); //0x66
     }
-   // MCP2515_bit_modify(MCP_CANINTF,0b00000001,0b00000000); 
+    MCP2515_bit_modify(MCP_CANINTF,0b00000001,0b00000000); 
    // flag=0;
     }
     else if (bufferNb==0x2){
@@ -126,17 +132,17 @@ void CAN_receive(struct Message *message,int bufferNb){
     //read ID
     uint16_t id0=MCP2515_read(MCP_RXB1SIDH); // 0x71
     uint16_t id1=MCP2515_read(0x72);
-    printf("id0: %x | id1: %x\n",id0,id1);
+    //printf("id0: %x | id1: %x\n",id0,id1);
     uint16_t id = (id1 << 8)|id0; 
     message->id=id; 
     //read data length
     message->length=MCP2515_read(0x75); //0x75
-    printf("CAN receive 1 message length: %d\n",message->length);
+    //printf("CAN receive 1 message length: %d\n",message->length);
     //read data
     for(int i=0; i<message->length;i++){
         message->data[i]=MCP2515_read(0x76+i); //0x76
     }
-//MCP2515_bit_modify(MCP_CANINTF,0b00000010,0b00000000); 
+MCP2515_bit_modify(MCP_CANINTF,0b00000010,0b00000000); 
 //flag=0;
     }
     

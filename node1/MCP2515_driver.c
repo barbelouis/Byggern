@@ -40,7 +40,7 @@ return result ;
 }
 ////////////////////////////////////////////////////////////
 
-void MCP2515_write(uint8_t address, int lenght, uint8_t* data ){
+void MCP2515_write_array(uint8_t address, int lenght, uint8_t* data ){
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
         SPI_write ( MCP_WRITE ); // Send read instruction 
         SPI_write ( address); // Send address
@@ -49,7 +49,7 @@ void MCP2515_write(uint8_t address, int lenght, uint8_t* data ){
         }
         PORTB |= (1 << CAN_CS); // Deselect CAN - controller
 }
-void MCP2515_write1(uint8_t address, uint8_t* data ){
+void MCP2515_write(uint8_t address, uint8_t data ){
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
         SPI_write ( MCP_WRITE ); // Send read instruction 
         SPI_write ( address); // Send address

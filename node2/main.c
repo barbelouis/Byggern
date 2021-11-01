@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include "uart_and_printf/uart.h"
-#include "uart_and_printf/printf-stdarg.h"
+#include "uart.h"
+#include "printf-stdarg.h"|
 
 
 /* LED Definitions */

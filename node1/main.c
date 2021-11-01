@@ -57,7 +57,11 @@ int main(void){
        
     CAN_init();
     
-    struct Message message={0b00000000111,3,"abc"};
+    struct Message message={0b11110000110,6,"abcdef"};
+
+    //CAN_MESSAGE* message={0b00000000111,4,"abcd"};
+
+    
 
 
     struct Message received_message;
@@ -69,6 +73,8 @@ int main(void){
                 } 
     // CAN_send(message);
     
+    
+
 
     while(1){
         //continue;
@@ -79,8 +85,8 @@ int main(void){
         current_option=menu.current_option;
         selected_option= menu.selected_option;
         */
-        CAN_send(message);
        
+       CAN_send(message);
         if(flag|1){
           //  printf("Interrupt received\n");
             uint8_t status;
@@ -101,7 +107,7 @@ int main(void){
            //     printf("%x ",received_message.data);
               
                 for(int i=0; i< received_message.length; i++){
-                    printf("%x",received_message.data[i]);
+                    printf("%c",received_message.data[i]);
                     
                 } 
 
