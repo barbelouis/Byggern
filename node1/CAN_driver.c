@@ -5,14 +5,21 @@
 #include <stdio.h>
 #include <avr/interrupt.h>
 
+
 //int flag=0;
 
 void CAN_init(){
 /*
     DDRD &= ~(1<<PD2);
     */
+    
     MCP2515_init(); //MCP2515 Init
     _delay_ms(1000);
+
+
+    MCP2515_bit_modify(MCP_CNF1,0xff,0x03);
+    MCP2515_bit_modify(MCP_CNF2,0xff,0b11110001);
+    MCP2515_bit_modify(MCP_CNF3,0b11000111,0b11000101);
    // MCP2515_bit_modify(MCP_CANINTE,0b00000111,0b00000100); //set conf mod MCP2515_bit_modify(MCP_CANINTE,0b00000111,0b00000100); //set RX0IE to 1
 
      //tests/
@@ -20,7 +27,7 @@ void CAN_init(){
    /* MCP2515_bit_modify(MCP_CANINTE,0b00011111,0b00000011); */
     // disable tx interrupt TO DO
     
-
+/*
     //set the MCP2515 in loopback mode
     MCP2515_bit_modify(MCP_CANCTRL,MODE_MASK,MODE_LOOPBACK); //Set REQOP0=0, REQOP1=1, REQOP2=0
     uint8_t value = MCP2515_read ( MCP_CANSTAT);
@@ -31,6 +38,24 @@ void CAN_init(){
         printf (" MCP2515 is NOT in LoopBack mode after reset !\n");
                 return 1;
         }
+  */      
+
+
+        //set the MCP2515 in loopback mode
+    MCP2515_bit_modify(MCP_CANCTRL,MODE_MASK,MODE_NORMAL); //Set REQOP0=0, REQOP1=1, REQOP2=0
+    uint8_t value = MCP2515_read ( MCP_CANSTAT);
+       // printf("CANSTAT : %d \r\n",value);
+
+
+        if (( value & MODE_MASK ) != MODE_NORMAL ) {
+        printf (" MCP2515 is NOT in Normal mode after reset !\n");
+                return 1;
+        }
+
+    
+
+
+
 /*
      //////////////////////////////////////////:
     cli();

@@ -1,6 +1,8 @@
 #ifndef CAN_DRIVER_H
 #define CAN_DRIVER_H
 
+
+#include <stdint.h>
 int flag;
 
 typedef struct Message

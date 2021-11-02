@@ -36,7 +36,7 @@ int main(void){
     //init USART for communicqtion and printing
     USART_Init( MYUBRR );
 
-    //ADC_init();
+    ADC_init();
 
     OLED_init();
     
@@ -86,7 +86,8 @@ int main(void){
         selected_option= menu.selected_option;
         */
        
-       CAN_send(message);
+       //CAN_send(message);
+       send_joystick_position_to_node2();
         if(flag|1){
           //  printf("Interrupt received\n");
             uint8_t status;
