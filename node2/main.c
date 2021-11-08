@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "uart.h"
-#include "printf-stdarg.h"|
+#include "printf-stdarg.h"
+#include "can_controller.h"
+//#include "can_interrupt.h"
+
 
 
 /* LED Definitions */
@@ -44,6 +47,7 @@ extern void LED_Out (unsigned int value);
 //                                        'TX' LED  'L' LED   'RX' LED
 //                                        Port A    Port B    Port C
 const unsigned long led_mask[LED_NUM] = { PIO_PA19, PIO_PA20, PIO_PC30 };
+	
 
 /*----------------------------------------------------------------------------
   initialize LED Pins
@@ -123,10 +127,47 @@ int main()
     printf("Hello World\n\r");
     
     LED_Init();
-     
+	
+	uint32_t baud_rate= 0x00290165;
+    can_init_def_tx_rx_mb(baud_rate);
+	double current_pulsewidth = servo_init();
+	char x = 'T';
+	
+	/*uint16_t id =0x0003;
+	char data_length = '1';
+	char data[0] = {'Z'};
+	*/
+	
+	CAN_MESSAGE* can_msg;
+	//can_msg->data[0] = 0xFF;
+	can_msg->data[0] = 'Z';
+	can_msg->id = 3;
+	can_msg->data_length = 1;
 
+	
+
+	//servo_angle(45);
+	//servo_drive(0.1);
+	//float test=mapf(45.0,0.0,180.0,0.05,0.10);
+	//long test=mapf(90,0,180,5,10);
+	//servo_drive(test);
+	//printf("%f\n\r",test);
+	//servo_angle(90);
+	/*servo_angle(0);*/
+	//servo_set(0.002);
+	
     while (1)
     {
+		//servo_angle(180);
+		//can_send(can_msg,0);
+		
+		servo_angle(x, current_pulsewidth);
+		delay(30000);
+		
+		
+		//servo_drive(0.001);
+		//printf("Message sent\n\r");
+		
         // code 
        /*
         LED_On(0);
@@ -135,8 +176,34 @@ int main()
         LED_Off(0);
         //LED_Off(1);
         */
-        delay(1000);
-        printf("Hello World\n\r");
+        //delay(1000);
+        //printf("Hello World\n\r");
+		
+		/*printf("Message sent\n\r");
+		printf("%d\n\r",can_msg->id);
+		printf("%d\n\r",can_msg->data_length);
+		printf("%d\n\r",can_msg->data[0]);
+		printf("\n\r");	*/
+		
+//     		for(double i = 0.002; i >= 0.0009;i -=0.0001){
+//    			 servo_set(i);
+//    			 delay(300000);
+//    		 }
+
+
+			
+// 		
+// 		duty=0.5;
+// 		servo_drive(duty);
+		
+		/*
+		servo_drive(0.5);
+		delay(300000);
+		servo_drive(0.1);
+		delay(300000);
+		servo_drive(0.9);
+		delay(300000);
+		*/
     }
     
 }

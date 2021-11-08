@@ -1,5 +1,5 @@
 build/main.o: main.c uart_and_printf/uart.h \
- uart_and_printf/printf-stdarg.h sam/sam3x/include/sam.h \
+ uart_and_printf/printf-stdarg.h can_controller.h sam/sam3x/include/sam.h \
  sam/sam3x/include/sam3x8e.h sam/cmsis/core_cm3.h \
  sam/cmsis/cmsis_version.h sam/cmsis/cmsis_compiler.h \
  sam/cmsis/cmsis_gcc.h sam/cmsis/mpu_armv7.h \

@@ -9,9 +9,9 @@
 //int flag=0;
 
 void CAN_init(){
-/*
+
     DDRD &= ~(1<<PD2);
-    */
+    
     
     MCP2515_init(); //MCP2515 Init
     _delay_ms(1000);
@@ -24,7 +24,7 @@ void CAN_init(){
 
      //tests/
     //MCP2515_write(MCP_CANINTE,1,0b00000011);
-   /* MCP2515_bit_modify(MCP_CANINTE,0b00011111,0b00000011); */
+    MCP2515_bit_modify(MCP_CANINTE,0b00011111,0b00000011);
     // disable tx interrupt TO DO
     
 /*
@@ -38,10 +38,10 @@ void CAN_init(){
         printf (" MCP2515 is NOT in LoopBack mode after reset !\n");
                 return 1;
         }
-  */      
+    
+*/
 
-
-        //set the MCP2515 in loopback mode
+        //set the MCP2515 in normal mode
     MCP2515_bit_modify(MCP_CANCTRL,MODE_MASK,MODE_NORMAL); //Set REQOP0=0, REQOP1=1, REQOP2=0
     uint8_t value = MCP2515_read ( MCP_CANSTAT);
        // printf("CANSTAT : %d \r\n",value);
@@ -52,11 +52,11 @@ void CAN_init(){
                 return 1;
         }
 
-    
 
 
 
-/*
+
+
      //////////////////////////////////////////:
     cli();
     MCUCR |= (1<<ISC01 ) ;
@@ -67,11 +67,11 @@ void CAN_init(){
     GICR |= (1<<INT0 ) ;
     
     sei();
-    MCP2515_write(MCP_CANINTF,2,0x00);
+    MCP2515_write(MCP_CANINTF,0x00);
     ///////////////////////////////////////////
-    */
+    
 
-    //MCP2515_bit_modify(MCP_CANINTE,0b00000001,0b00000001); //set RX0IE to 1
+
    
 
 }
@@ -150,7 +150,7 @@ void CAN_receive(struct Message *message,int bufferNb){
         message->data[i]=MCP2515_read(0x66+i); //0x66
     }
     MCP2515_bit_modify(MCP_CANINTF,0b00000001,0b00000000); 
-   // flag=0;
+    flag=0;
     }
     else if (bufferNb==0x2){
         ///////////// read message//////////////////////////////    
@@ -168,7 +168,7 @@ void CAN_receive(struct Message *message,int bufferNb){
         message->data[i]=MCP2515_read(0x76+i); //0x76
     }
 MCP2515_bit_modify(MCP_CANINTF,0b00000010,0b00000000); 
-//flag=0;
+flag=0;
     }
     
     //printf("%d",MCP_CANINTF);
@@ -180,10 +180,9 @@ MCP2515_bit_modify(MCP_CANINTF,0b00000010,0b00000000);
     //printf("\n");
 }
 
-/*
+
 ISR(INT0_vect){
     flag=1;
 }
 
 ISR(BADISR_vect){}
-*/
