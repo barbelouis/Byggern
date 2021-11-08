@@ -1,10 +1,22 @@
+/**
+ * \file MCP2515_driver.c
+ * \brief MCP2515 library
+ * \author Louis Barbe & Michel Schneider
+ * \version 1
+ * \date 8 november 2021
+ *
+ */
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/MCP2515_driver.h"
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/SPI_driver.h"
 #include <util/delay.h>  
 #include <avr/io.h>
 #include <stdio.h>
 
-
+/**
+ * \fn uint8_t MCP2515_init()
+ * \brief MCP2515 initialization
+ * \return 0 if in configuration mode, 1 if not.
+ */
 uint8_t MCP2515_init(){
        // DDRB = 0x01; // initialize port B
 
@@ -27,7 +39,13 @@ return 0;
 }
 
 
-
+/**
+ * \fn uint8_t MCP2515_read ( uint8_t address )
+ * \brief MCP2515 read at specified address
+ *
+ * \param uint8_t address
+ * \return value stored at specified the address.
+ */
 uint8_t MCP2515_read ( uint8_t address )
 {
 uint8_t result ;
@@ -40,6 +58,16 @@ return result ;
 }
 ////////////////////////////////////////////////////////////
 
+
+
+/**
+ * \fn MCP2515_write_array(uint8_t address, int lenght, uint8_t* data )
+ * \brief MCP2515 write an array of a specific lenght from a mentionend address
+ *
+ * \param uint8_t address
+ * \param int lenght
+ * \param uint8_t* data
+ */
 void MCP2515_write_array(uint8_t address, int lenght, uint8_t* data ){
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
         SPI_write ( MCP_WRITE ); // Send read instruction 
@@ -49,6 +77,13 @@ void MCP2515_write_array(uint8_t address, int lenght, uint8_t* data ){
         }
         PORTB |= (1 << CAN_CS); // Deselect CAN - controller
 }
+
+/**
+ * \fn MCP2515_write(uint8_t address, uint8_t data )
+ * \brief MCP2515 write a byte to a specific address
+ * \param uint8_t address 
+ * \param uint8_t data
+ */
 void MCP2515_write(uint8_t address, uint8_t data ){
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
         SPI_write ( MCP_WRITE ); // Send read instruction 
@@ -56,6 +91,11 @@ void MCP2515_write(uint8_t address, uint8_t data ){
         SPI_write(data); // send data
         PORTB |= (1 << CAN_CS); // Deselect CAN - controller
 }
+
+/**
+ * \fn MCP2515_request_send()
+ * \brief MCP2515 request to send the data that were stored in the transmission buffers
+ */
 void MCP2515_request_send(){
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
         //printf("before SPI write\n");
@@ -64,6 +104,12 @@ void MCP2515_request_send(){
         PORTB |= (1 << CAN_CS); // Deselect CAN - controller
         
 }
+
+/**
+ * \fn uint8_t MCP2515_read_status()
+ * \brief MCP2515 read status
+ * \return status
+ */
 uint8_t MCP2515_read_status(){
         
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
@@ -72,6 +118,14 @@ uint8_t MCP2515_read_status(){
         PORTB |= (1 << CAN_CS); // Deselect CAN - controller
         return result;
 }
+
+/**
+ * \fn MCP2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data)
+ * \brief MCP2515 modify specific bits at specific address
+ * \param uint8_t address
+ * \param uint8_t mask
+ * \param uint8_t data
+ */
 void MCP2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data){
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
         SPI_write(MCP_BITMOD);
@@ -80,6 +134,11 @@ void MCP2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data){
         SPI_write(data);
         PORTB |= (1 << CAN_CS); // Deselect CAN - controller
 }
+
+/**
+ * \fn void MCP2515_reset()
+ * \brief MCP2515 reset
+ */
 void MCP2515_reset(){
         PORTB &= ~(1 << CAN_CS);  // Select CAN - controller
         SPI_write(MCP_RESET);  // write instruction reset (0xc0) to MCP2515 through SPI

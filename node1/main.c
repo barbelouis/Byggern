@@ -1,7 +1,8 @@
-#define FOSC 4915200// Clock Speed
+/// \file
+#define FOSC 4915200 // Clock Speed
 #define F_CPU 4915200
 #define BAUD 9600
-#define MYUBRR FOSC/16/BAUD-1
+#define MYUBRR FOSC / 16 / BAUD - 1
 
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/UART_driver.h"
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/ADC_driver.h"
@@ -14,14 +15,14 @@
 
 //#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/fonts.h"
 #include <avr/io.h>
-#include <util/delay.h> 
+#include <util/delay.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <avr/interrupt.h>
 
-
-
-int main(void){
+///Entry point of the program
+int main(void)
+{
 
     printf("==============\n");
     printf("    RESET\n");
@@ -32,71 +33,56 @@ int main(void){
     MCUCR |= (1 << SRE);
     //SFIOR =0bxx1xxxxx; // Uses of jtag on port C (cf. page 32)
     SFIOR |= (1 << XMM2);
-    
+
     //init USART for communicqtion and printing
-    USART_Init( MYUBRR );
+    USART_Init(MYUBRR);
 
     ADC_init();
 
     OLED_init();
-    
-    
+
     OLED_reset();
 
+    int selected_option = 1;
 
-     
-    int selected_option=1;
-    
-    
-    struct Option current_option=define_options();
-    struct Menu menu;//={define_options(),1};
-    
+    struct Option current_option = define_options();
+    struct Menu menu; //={define_options(),1};
 
-
-    
-       
     CAN_init();
-    
-    struct Message message={0b11110000110,6,"abcdef"};
 
-
-    
-
+    struct Message message = {0b11110000110, 6, "abcdef"};
 
     struct Message received_message;
 
+    for (int i = 0; i < message.length; i++)
+    {
+        printf("%x ", message.data[i]);
+    }
 
-    for(int i=0; i< message.length; i++){
-                    printf("%x ",message.data[i]);
-                    
-                } 
-    
-    
-
-    while (1) {
+    while (1)
+    {
 
         CAN_send(message);
         uint8_t status;
         uint8_t error;
         uint8_t rec;
         uint8_t tec;
-            
 
-        status= MCP2515_read(MCP_CANINTF);
-        error= MCP2515_read(MCP_EFLG);
-        rec= MCP2515_read(MCP_REC);
-        tec= MCP2515_read(MCP_TEC);
-        printf("status: %x\n",status);
-        printf("error flag: %x\n",error);
-        printf("REC: %x\n",rec);
-        printf("TEC: %x\n",tec);
+        status = MCP2515_read(MCP_CANINTF);
+        error = MCP2515_read(MCP_EFLG);
+        rec = MCP2515_read(MCP_REC);
+        tec = MCP2515_read(MCP_TEC);
+        printf("status: %x\n", status);
+        printf("error flag: %x\n", error);
+        printf("REC: %x\n", rec);
+        printf("TEC: %x\n", tec);
 
         _delay_ms(1000);
     }
 
     return 0;
-    
-/*
+
+    /*
 
     while(1){
         //continue;
@@ -155,7 +141,3 @@ int main(void){
 
 */
 }
-
-
-
-
