@@ -18,8 +18,8 @@ void CAN_init(){
 
 
     MCP2515_bit_modify(MCP_CNF1,0xff,0x03);
-    MCP2515_bit_modify(MCP_CNF2,0xff,0b11110001);
-    MCP2515_bit_modify(MCP_CNF3,0b11000111,0b11000101);
+    MCP2515_bit_modify(MCP_CNF2,0xff,0b10110001);
+    MCP2515_bit_modify(MCP_CNF3,0b11000111,0b00000101);
    // MCP2515_bit_modify(MCP_CANINTE,0b00000111,0b00000100); //set conf mod MCP2515_bit_modify(MCP_CANINTE,0b00000111,0b00000100); //set RX0IE to 1
 
      //tests/

@@ -59,7 +59,6 @@ int main(void){
     
     struct Message message={0b11110000110,6,"abcdef"};
 
-    //CAN_MESSAGE* message={0b00000000111,4,"abcd"};
 
     
 
@@ -71,31 +70,63 @@ int main(void){
                     printf("%x ",message.data[i]);
                     
                 } 
-    // CAN_send(message);
     
     
 
+    while (1) {
+
+        CAN_send(message);
+        uint8_t status;
+        uint8_t error;
+        uint8_t rec;
+        uint8_t tec;
+            
+
+        status= MCP2515_read(MCP_CANINTF);
+        error= MCP2515_read(MCP_EFLG);
+        rec= MCP2515_read(MCP_REC);
+        tec= MCP2515_read(MCP_TEC);
+        printf("status: %x\n",status);
+        printf("error flag: %x\n",error);
+        printf("REC: %x\n",rec);
+        printf("TEC: %x\n",tec);
+
+        _delay_ms(1000);
+    }
+
+    return 0;
+    
+/*
 
     while(1){
         //continue;
         printf("==== LOOP ====\n\n");
         _delay_ms(3000);
-        /*
-        menu=make_menu(current_option,selected_option);
-        current_option=menu.current_option;
-        selected_option= menu.selected_option;
-        */
+        
+        //menu=make_menu(current_option,selected_option);
+        //current_option=menu.current_option;
+        //selected_option= menu.selected_option;
+        
        
        //CAN_send(message);
-       send_joystick_position_to_node2();
-        if(flag){
+       //send_joystick_position_to_node2();
+        if(flag|1){
           //  printf("Interrupt received\n");
             uint8_t status;
+            uint8_t error;
+            uint8_t rec;
+            uint8_t tec;
             //status= MCP2515_read_status();
             
 
             status= MCP2515_read(MCP_CANINTF);
+            error= MCP2515_read(MCP_EFLG);
+            rec= MCP2515_read(MCP_REC);
+            tec= MCP2515_read(MCP_TEC);
             printf("status: %x\n",status);
+            printf("error flag: %x\n",error);
+            printf("REC: %x\n",rec);
+            printf("TEC: %x\n",tec);
             if((0x3 & status)){
                 //cli();
                 CAN_receive(&received_message,status & 0x3);
@@ -122,6 +153,7 @@ int main(void){
     
     }
 
+*/
 }
 
 

@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include "uart.h"
-#include "printf-stdarg.h"
+#include "uart_and_printf/uart.h"
+#include "uart_and_printf/printf-stdarg.h"
 #include "can_controller.h"
-//#include "can_interrupt.h"
+#include "can_interrupt.h"
 
 
 
@@ -124,25 +124,25 @@ int main()
     WDT->WDT_MR = WDT_MR_WDDIS; //Disable Watchdog Timer
 
     configure_uart();
-    printf("Hello World\n\r");
+    printf("=====RESET=====\n\r");
     
     LED_Init();
 	
-	uint32_t baud_rate= 0x00290165;
+	  uint32_t baud_rate= 0x00290165;
     can_init_def_tx_rx_mb(baud_rate);
-	double current_pulsewidth = servo_init();
-	char x = 'T';
+	//double current_pulsewidth = servo_init();
+	//char x = 'T';
 	
 	/*uint16_t id =0x0003;
 	char data_length = '1';
 	char data[0] = {'Z'};
 	*/
 	
-	CAN_MESSAGE* can_msg;
+	CAN_MESSAGE can_msg; //or malloc
 	//can_msg->data[0] = 0xFF;
-	can_msg->data[0] = 'Z';
-	can_msg->id = 3;
-	can_msg->data_length = 1;
+	can_msg.data[0] = 'Z';
+	can_msg.id = 3;
+	can_msg.data_length = 1;
 
 	
 
@@ -158,11 +158,12 @@ int main()
 	
     while (1)
     {
-		//servo_angle(180);
-		//can_send(can_msg,0);
+      //printf("message sent\n\r");
+		  //servo_angle(180);
+		  //can_send(&can_msg,0);
 		
-		servo_angle(x, current_pulsewidth);
-		delay(30000);
+		  //servo_angle(x, current_pulsewidth);
+		  //delay(300000);
 		
 		
 		//servo_drive(0.001);
