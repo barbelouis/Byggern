@@ -152,19 +152,21 @@ int main()
   /*servo_angle(0);*/
   //servo_set(0.002);
 
-  DACC->DACC_CR_SWRST;
+  //DACC->DACC_CR_SWRST;
+  //mode register
+  //power management
 
   while (1)
   {
     //printf("message sent\n\r");
     //servo_angle(180);
-    //can_send(&can_msg,0);
+    can_send(&can_msg,0);
 
     //servo_angle(x, current_pulsewidth);
-    //delay(300000);
+    delay(300000);
 
     //servo_drive(0.001);
-    //printf("Message sent\n\r");
+    printf("Message sent\n\r");
 
     // code
     /*

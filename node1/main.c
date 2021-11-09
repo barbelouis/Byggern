@@ -24,9 +24,7 @@
 int main(void)
 {
 
-    printf("==============\n");
-    printf("    RESET\n");
-    printf("==============\n");
+    
 
     //Set register for use of JTAG
     //MCUCR =0b1xxxxxxx;
@@ -36,6 +34,9 @@ int main(void)
 
     //init USART for communicqtion and printing
     USART_Init(MYUBRR);
+
+
+    printf("===== RESET =====\n");
 
     ADC_init();
 
@@ -50,15 +51,15 @@ int main(void)
 
     CAN_init();
 
-    struct Message message = {0b11110000110, 6, "abcdef"};
+    CAN_MESSAGE message = {0b11110000110, 6, "abcdef"};
 
-    struct Message received_message;
+    CAN_MESSAGE received_message;
 
     for (int i = 0; i < message.length; i++)
     {
         printf("%x ", message.data[i]);
     }
-
+/*
     while (1)
     {
 
@@ -77,12 +78,13 @@ int main(void)
         printf("REC: %x\n", rec);
         printf("TEC: %x\n", tec);
 
-        _delay_ms(1000);
+        _delay_ms(500);
     }
 
     return 0;
+    */
 
-    /*
+    
 
     while(1){
         //continue;
@@ -139,5 +141,5 @@ int main(void)
     
     }
 
-*/
+
 }
