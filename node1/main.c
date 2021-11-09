@@ -98,7 +98,7 @@ int main(void)
        
        //CAN_send(message);
        //send_joystick_position_to_node2();
-        if(flag|1){
+        if(flag){
           //  printf("Interrupt received\n");
             uint8_t status;
             uint8_t error;

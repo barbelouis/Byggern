@@ -1,8 +1,8 @@
 build/main.o: main.c uart_and_printf/uart.h \
  uart_and_printf/printf-stdarg.h can_controller.h can_interrupt.h \
- sam/sam3x/include/sam.h sam/sam3x/include/sam3x8e.h sam/cmsis/core_cm3.h \
- sam/cmsis/cmsis_version.h sam/cmsis/cmsis_compiler.h \
- sam/cmsis/cmsis_gcc.h sam/cmsis/mpu_armv7.h \
+ motor_driver.h sam/sam3x/include/sam.h sam/sam3x/include/sam3x8e.h \
+ sam/cmsis/core_cm3.h sam/cmsis/cmsis_version.h \
+ sam/cmsis/cmsis_compiler.h sam/cmsis/cmsis_gcc.h sam/cmsis/mpu_armv7.h \
  sam/sam3x/source/system_sam3x.h sam/compiler.h sam/parts.h \
  sam/preprocessor.h sam/tpaste.h sam/stringz.h sam/mrepeat.h sam/io.h \
  sam/sam3x/include/sam3xa.h sam/interrupt.h \

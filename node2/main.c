@@ -4,6 +4,7 @@
 #include "uart_and_printf/printf-stdarg.h"
 #include "can_controller.h"
 #include "can_interrupt.h"
+#include "motor_driver.h"
 
 /* LED Definitions */
 #define LED_NUM 3 /* Number of user LEDs          */
@@ -58,7 +59,7 @@ void LED_Init(void)
   PIOA->PIO_PER =
       PIOA->PIO_OER =
           PIOA->PIO_PUDR =
-              PIOA->PIO_OWER = (led_mask[0]); /* Setup PIO_PA12     for LED       */
+              PIOA->PIO_OWER = (led_mask[1]); /* Setup PIO_PA12     for LED       */
 
   //PMC->PMC_WPMR = 0x504D4301;             /* Enable write protect             */
 
@@ -71,7 +72,7 @@ void LED_Init(void)
 void LED_On(unsigned int num)
 {
 
-  PIOA->PIO_CODR = led_mask[num];
+  PIOA->PIO_CODR = PIO_PA20;//led_mask[num];
 }
 
 /*----------------------------------------------------------------------------
@@ -80,28 +81,9 @@ void LED_On(unsigned int num)
 void LED_Off(unsigned int num)
 {
 
-  PIOA->PIO_SODR = led_mask[num];
+  PIOA->PIO_SODR = PIO_PA20;//led_mask[num];
 }
 
-/*----------------------------------------------------------------------------
-  Function that outputs value to LEDs
- *----------------------------------------------------------------------------*/
-void LED_Out(unsigned int value)
-{
-  int i;
-
-  for (i = 0; i < LED_NUM; i++)
-  {
-    if (value & (1 << i))
-    {
-      LED_On(i);
-    }
-    else
-    {
-      LED_Off(i);
-    }
-  }
-}
 
 void delay(int n)
 {
@@ -152,21 +134,19 @@ int main()
   /*servo_angle(0);*/
   //servo_set(0.002);
 
-  //DACC->DACC_CR_SWRST;
-  //mode register
-  //power management
-
   while (1)
   {
     //printf("message sent\n\r");
     //servo_angle(180);
-    can_send(&can_msg,0);
-
-    //servo_angle(x, current_pulsewidth);
-    delay(300000);
-
-    //servo_drive(0.001);
+    can_send(&can_msg, 0);
     printf("Message sent\n\r");
+    LED_On(0);
+    //servo_angle(x, current_pulsewidth);
+    delay(150000);
+    LED_Off(0);
+    delay(150000);
+    //servo_drive(0.001);
+    
 
     // code
     /*
