@@ -17,6 +17,19 @@ static struct Option option2 = {NULL, "B:", "BA", "BB", "BC", NULL, NULL, NULL};
 static struct Option option1 = {NULL, "A:", "AA", "AB", "AC", NULL, NULL, NULL};
 static struct Option option0 = {NULL, "Options:", "A", "B", "C", NULL, NULL, NULL};
 
+
+/*
+GAME MENU
+static struct Option home={NULL, "HOME", "Play", "Settings", "", NULL, NULL, NULL};
+static struct Option play={NULL, "PLAY", "3 lifes", "5 lifes", "10 lifes", NULL, NULL, NULL};
+static struct Option settings={NULL, "SETTINGS", "Calibrate", "Credits", "", NULL, NULL, NULL};
+static struct Option calibration={NULL, "CALIBRATION", "", "", "", NULL, NULL, NULL};
+static struct Option credits={NULL, "CREDITS", "Louis BARBE", "Michel SCHneider", "", NULL, NULL, NULL};
+static struct Option lifes3={NULL, "3 Lifes", "", "", "", NULL, NULL, NULL};
+static struct Option lifes5={NULL, "5 Lifes", "", "", "", NULL, NULL, NULL};
+static struct Option lifes10={NULL, "10 Lifes", "", "", "", NULL, NULL, NULL};
+
+*/
 /**
  * \fn void make_options(char *title, int cursorPosition, char *o1, char *o2, char *o3)
  * \brief Print the options with existing options
@@ -121,6 +134,37 @@ struct Option define_options()
      struct Option current_option = option0;
      //int selected_option;
      return option0;
+
+/*
+GAME OPTIONS MAPPING
+     option3.previous_option = &option0;
+     option3.next_1 = &option3;
+     option3.next_2 = &option3;
+     option3.next_3 = &option3;
+
+     home.previous_option = &home;
+     home.next_1 = &play;
+     home.next_2 = &settings;
+     home.next_3 = &home;
+
+     play.previous_option = &home;
+     play.next_1 = &lifes3;
+     play.next_2 = &lifes5;
+     play.next_3 = &lifes10;
+
+     settings.previous_option = &home;
+     settings.next_1 = &calibrate;
+     settings.next_2 = &credits;
+     setting.next_3 = &settings;
+
+     credits.previous_option = &settings;
+     credits.next_1 = &credits;
+     credits.next_2 = &credits;
+     credits.next_3 = &credits;
+
+     struct Option current_option = home;
+     */
+
 }
 
 /**

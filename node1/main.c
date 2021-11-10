@@ -12,6 +12,7 @@
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/SPI_driver.h"
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/MCP2515_driver.h"
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/CAN_driver.h"
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/sensors_over_CAN_driver.h"
 
 //#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/fonts.h"
 #include <avr/io.h>
@@ -90,10 +91,10 @@ int main(void)
         //continue;
         printf("==== LOOP ====\n\n");
         _delay_ms(3000);
-        
-        //menu=make_menu(current_option,selected_option);
-        //current_option=menu.current_option;
-        //selected_option= menu.selected_option;
+        //send_right_slider_position_to_node2();
+        menu=make_menu(current_option,selected_option);
+        current_option=menu.current_option;
+        selected_option= menu.selected_option;
         
        
        //CAN_send(message);

@@ -1,5 +1,5 @@
 /**
- * \file joystick_over_CAN.c
+ * \file sensors_over_CAN.c
  * \brief Send sensors value over the CAN
  * \author Louis Barbe & Michel Schneider
  * \version 1
@@ -19,5 +19,12 @@ void send_joystick_position_to_node2()
 {
 
     struct Message joystick_can_msg = {0b00000000011, 1, get_joystick_direction()};
+    CAN_send(joystick_can_msg);
+}
+
+void send_right_slider_position_to_node2()
+{
+
+    struct Message joystick_can_msg = {0b0000000001, 1, get_right_slider_percentage()};
     CAN_send(joystick_can_msg);
 }

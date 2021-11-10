@@ -5,6 +5,9 @@
 #include "can_controller.h"
 #include "can_interrupt.h"
 #include "motor_driver.h"
+#include "ADC_driver.h"
+#include "encoder_driver.h"
+#include <time.h>
 
 /* LED Definitions */
 #define LED_NUM 3 /* Number of user LEDs          */
@@ -63,7 +66,7 @@ void LED_Init(void)
 
   //PMC->PMC_WPMR = 0x504D4301;             /* Enable write protect             */
 
-  LED_Out(0); /* switch LEDs off                  */
+  LED_Off(0); /* switch LEDs off                  */
 }
 
 /*----------------------------------------------------------------------------
@@ -72,7 +75,7 @@ void LED_Init(void)
 void LED_On(unsigned int num)
 {
 
-  PIOA->PIO_CODR = PIO_PA20;//led_mask[num];
+  PIOA->PIO_CODR = PIO_PA20; //led_mask[num];
 }
 
 /*----------------------------------------------------------------------------
@@ -81,9 +84,8 @@ void LED_On(unsigned int num)
 void LED_Off(unsigned int num)
 {
 
-  PIOA->PIO_SODR = PIO_PA20;//led_mask[num];
+  PIOA->PIO_SODR = PIO_PA20; //led_mask[num];
 }
-
 
 void delay(int n)
 {
@@ -95,6 +97,20 @@ void delay(int n)
       __asm("nop");
   }
 }
+
+//extract https://stackoverflow.com/questions/7004743/unable-to-link-to-gettimeofday-on-embedded-system-elapsed-time-suggestions
+extern "C" {
+  // This must exist to keep the linker happy but is never called.
+  int _gettimeofday( struct timeval *tv, void *tzvp )
+  {
+    Serial.println("_gettimeofday dummy");
+    uint64_t t = 0;  // get uptime in nanoseconds
+    tv->tv_sec = t / 1000000000;  // convert to seconds
+    tv->tv_usec = ( t % 1000000000 ) / 1000;  // get remaining microseconds
+    return 0;  // return non-zero for error
+  } // end _gettimeofday()
+}
+// en extract 
 
 int main()
 {
@@ -133,20 +149,59 @@ int main()
   //servo_angle(90);
   /*servo_angle(0);*/
   //servo_set(0.002);
-
+  motor_init();
+  encoder_init();
+  uint32_t range = motor_calibration();
+  //encoder_reset();
+  printf("Range: %x\n\r", range);
+  delay(15000);
+  //motor_go_to(0x1200,0x2200,0xff);
+  //motor_drive_left();
+  time_t now = time(0); // Get the system time
   while (1)
   {
     //printf("message sent\n\r");
     //servo_angle(180);
-    can_send(&can_msg, 0);
-    printf("Message sent\n\r");
+    //can_send(&can_msg, 0);
+    //printf("Message sent\n\r");
     LED_On(0);
+    motor_PID(30,range);
+    delay(25000);
+    now = time(0);
+    printf("time %d\n\r", now);
     //servo_angle(x, current_pulsewidth);
-    delay(150000);
+    /*
+    motor_drive_left(1000);
+    delay(25000);
+    motor_stop();
+    delay(100000);
     LED_Off(0);
-    delay(150000);
+    motor_drive_right(2000);
+    delay(25000);
+    motor_stop();
+    delay(100000);
+    */
+    //delay(15000);
+    //ADC_get_value();
+    /*
+    int encoder = encoder_read();
+    int position = map(encoder, 0, range, 0, 100);
+    int error = 50 - position;
+    int Kp = 18;
+    int pid_result = error * Kp;
+    printf("encoder: %d | position: %d | erreur: %d\n\r", encoder, position, error);
+    if (error > 0.0)
+    {
+      printf("in if\n\r");
+      motor_drive_left(pid_result);
+    }
+    else
+    {
+      printf("in else\n\r");
+      motor_drive_right(-pid_result);
+    }
+    */
     //servo_drive(0.001);
-    
 
     // code
     /*
