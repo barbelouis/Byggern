@@ -22,4 +22,11 @@ void OLED_print_ASCII(int code);
 void OLED_print(char* c);
 void OLED_print_title();
 void OLED_print_u();
+
+void OLED_draw_hearts();
+void print_pixel(int n,int size);
+void OLED_goto_pixel(int line, int column);
+void OLED_print_line_pixels(int nb_pixels,int size);
+void print_pixel_at(int line, int column, int size);
+void OLED_print_heart(int filled);
 #endif 

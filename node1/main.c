@@ -85,7 +85,11 @@ int main(void)
     while (1)
     {
         //OLED_print_title();
-        OLED_print_u();
+        OLED_draw_hearts();
+        
+
+
+
         //continue;
         printf("==== LOOP ====\n\n");
         _delay_ms(200);

@@ -176,8 +176,13 @@ void OLED_goto_column(column)
         /*for (uint16_t i = 0; i < column*8; i++){
                 write_d(0x00);
         }*/
-        write_c(0x0f & column);
-        write_c(0x10 | (column & 0xf0));
+        //write_c(0x0f & column);
+        //write_c(0x10 | (column & 0xf0));
+        if (0 <= column && column <= 127)
+        {
+                write_c(0x00 + (column & 0x0F));
+                write_c(0x10 + ((column & 0xF0) >> 4));
+        }
 }
 
 /**
@@ -1073,52 +1078,156 @@ void OLED_print_title()
 
 void OLED_print_u()
 {
+}
 
-        //OLED_reset();
+void OLED_draw_hearts()
+{
 
-        for (int i = 2; i < 6; i++)
-        {
-                OLED_goto_column(0);
-                OLED_goto_line(i);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-        }
+        int refl = 1;
+        int refc = 1;
+        OLED_reset();
+        OLED_goto_pixel(0,refc);
+        OLED_print("Lifes:");
+        OLED_goto_pixel(refl,refc);
+        OLED_print_heart(1);
+        OLED_goto_pixel(refl,refc+2);
+        OLED_print_heart(1);
+        OLED_goto_pixel(refl,refc+4);
+        OLED_print_heart(0);
+
+        /* 
+        OLED_goto_pixel(refl,refc+2);
+        OLED_print_line_pixels(3,0xf0);
+
+        OLED_goto_pixel(refl,refc+8);
+        OLED_print_line_pixels(3,0xf0);
+
+        OLED_goto_pixel(refl+1,refc+1);
+        OLED_print_line_pixels(5,0xf);
+        OLED_goto_pixel(refl+1,refc+7);
+        OLED_print_line_pixels(5,0xf);
+        OLED_goto_pixel(refl+2,refc);
+        OLED_print_line_pixels(12,0xff);
+        OLED_goto_pixel(refl+2,refc);
+        OLED_print_line_pixels(12,0xf);
+        OLED_goto_pixel(refl+2,refc);
+        OLED_print_line_pixels(12,0xf);
+/*
+       print_pixel_at( 5, 10,4);
+       OLED_test();
+       //print_pixel_at( 1, 10, 4);
+       
+/*
+        OLED_goto_pixel(1,1);
+        print_pixel(8,0xff);
+
+        OLED_goto_pixel(2,1);
+        print_pixel(8,0xff);
+
+        OLED_goto_pixel(3,1);
+        print_pixel(8,0xff);
+        //OLED_test();
+
+/*
         OLED_goto_column(8);
         OLED_goto_line(1);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-        OLED_goto_column(64);
-        OLED_goto_line(6);
-        write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
-                write_d(0xff);
+        print_pixel(8);
+/*
+        OLED_goto_column(24);
+        OLED_goto_line(1);
+        print_pixel(8);
+/*
+        OLED_goto_column(8);
+        OLED_goto_line(3);
+        print_pixel(8);
 
+        OLED_goto_column(24);
+        OLED_goto_line(2);
+        print_pixel(8);*/
+        /*
+        OLED_goto_column(16);
+        OLED_goto_line(3);
+        print_pixel(8);
+
+        OLED_goto_column(16);
+        OLED_goto_line(4);
+        print_pixel(8);
+
+        OLED_goto_column(24);
+        OLED_goto_line(1);
+        print_pixel(8);
+
+        OLED_goto_column(24);
+        OLED_goto_line(2);
+        print_pixel(8);
+
+        OLED_goto_column(24);
+        OLED_goto_line(3);
+        print_pixel(8);
+
+        OLED_goto_column(32);
+        OLED_goto_line(2);
+        print_pixel(8);
+       */
 }
-void print_pixel()
+
+void print_pixel(int n, int size)
 {
-        write_d(0xff);
-        write_d(0xff);
-        write_d(0xff);
-        write_d(0xff);
-        write_d(0xff);
-        write_d(0xff);
-        write_d(0xff);
-        write_d(0xff);
+        for (int i = 0; i < n; i++)
+        {
+                write_d(size);
+        }
+}
+
+void OLED_goto_pixel(int line, int column)
+{
+        OLED_goto_column(column * 8);
+        OLED_goto_line(line);
+}
+
+void OLED_print_line_pixels(int nb_pixels, int size)
+{
+        for (int i = 0; i < nb_pixels; i++)
+        {
+                print_pixel(4, size);
+        }
+}
+
+void print_pixel_at(int line, int column, int size)
+{
+        OLED_goto_column(column);
+        OLED_goto_line(line);
+        for (int i = 0; i < size; i++)
+        {
+                write_d(0xf);
+        }
+        //write_d(size);
+}
+
+void OLED_print_heart(int filled)
+{
+        if (filled)
+        {
+                write_d(0b00001110);
+                write_d(0b00011111);
+                write_d(0b00111111);
+                write_d(0b01111111);
+                write_d(0b11111110);
+                write_d(0b01111111);
+                write_d(0b00111111);
+                write_d(0b00011111);
+                write_d(0b00001110);
+        }
+        else
+        {
+                write_d(0b00001110);
+                write_d(0b00010001);
+                write_d(0b00100001);
+                write_d(0b01000001);
+                write_d(0b10000010);
+                write_d(0b01000001);
+                write_d(0b00100001);
+                write_d(0b00010001);
+                write_d(0b00001110);
+        }
 }

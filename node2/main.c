@@ -28,9 +28,11 @@
 int main()
 {
 
+  WDT->WDT_MR = WDT_MR_WDDIS; //Disable Watchdog Timer
+  
   SystemInit();
 
-  WDT->WDT_MR = WDT_MR_WDDIS; //Disable Watchdog Timer
+  
 
   configure_uart();
   printf("=====RESET=====\n\r");
