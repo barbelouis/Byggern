@@ -8,6 +8,7 @@ typedef struct
    float Kd;
    int previous_error;
    int sum_errors;
+   int max;
 
 }PID_settings;
 

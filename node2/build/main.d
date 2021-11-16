@@ -74,4 +74,4 @@ build/main.o: main.c uart_and_printf/uart.h \
  sam/sam3x/include/instance/instance_rtc.h \
  sam/sam3x/include/instance/instance_gpbr.h \
  sam/sam3x/include/pio/pio_sam3x8e.h ADC_driver.h encoder_driver.h \
- delay.h pid_controller.h
+ delay.h pid_controller.h solenoid_driver.h game.h

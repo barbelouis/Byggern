@@ -2,6 +2,7 @@
 #include "sam.h"
 #include "delay.h"
 #include "encoder_driver.h"
+#include "pid_controller.h"
 
 void motor_init()
 {
@@ -95,41 +96,12 @@ uint32_t map(uint32_t x, uint32_t in_min, uint32_t in_max, uint32_t out_min, uin
 }
 
 /*
-motor_go_to(uint32_t x, uint32_t range, uint32_t treshold)
-{
-
-	//uint32_t target = map(x, 0, 255, 0, range);
-	uint32_t target = x;
-	uint32_t encoder_value = encoder_read();
-	//while not in treshold
-	while (encoder_value < target - treshold || encoder_value > target + treshold)
-	{
-		if (encoder_value < target)
-		{
-			printf("Right\n\r");
-			motor_drive_left();
-			delayms(10);
-			motor_stop();
-			encoder_value = encoder_read();
-		}
-		else
-		{
-			printf("Left\n\r");
-			motor_drive_right();
-			delayms(10);
-			motor_stop();
-			encoder_value = encoder_read();
-		}
-		printf("target: %x | encoder: %x\n\r", target, encoder_value);
-		//delayms(500);
-	}
-}
-*/
 
 void motor_PID(int target, int range)
 {
 	int encoder = encoder_read();
-	int position = map(encoder, 0, range, 0, 100);
+	int position = map(encoder, 0, range, 0, 255);
+	
 	int error = target - position;
 	int Kp = 10;
 	int pid_result = error * Kp;
@@ -142,6 +114,26 @@ void motor_PID(int target, int range)
 	else
 	{
 		printf("in else\n\r");
+		motor_drive_right(-pid_result);
+	}
+}
+
+*/
+
+void motor_PID(int target, int range)
+{
+	int encoder = encoder_read();
+	int position = map(encoder, 0, range, 0, 100);
+
+	int pid_result = PID_controller(target, position);
+	if (pid_result > 0.0)
+	{
+		//printf("in if\n\r");
+		motor_drive_left(pid_result);
+	}
+	else
+	{
+		//printf("in else\n\r");
 		motor_drive_right(-pid_result);
 	}
 }

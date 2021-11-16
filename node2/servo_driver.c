@@ -6,8 +6,8 @@
  */ 
 
 #include "sam.h"
-#include "printf-stdarg.h"
-#include "Servo_driver.h"
+#include "uart_and_printf/printf-stdarg.h"
+#include "servo_driver.h"
 #include "can_controller.h"
 
 

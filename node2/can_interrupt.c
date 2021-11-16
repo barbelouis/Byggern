@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include "sam.h"
 
+#include "uart_and_printf/uart.h"
+
 #include "uart_and_printf/printf-stdarg.h"
 
 #include "can_controller.h"
@@ -50,6 +52,8 @@ void CAN0_Handler( void )
 			printf("CAN0 message arrived in non-used mailbox\n\r");
 		}
 
+		message_handler(message);
+		
 		if(DEBUG_INTERRUPT)printf("message id: %d\n\r", message.id);
 		if(DEBUG_INTERRUPT)printf("message data length: %d\n\r", message.data_length);
 		for (int i = 0; i < message.data_length; i++)
@@ -82,3 +86,4 @@ void CAN0_Handler( void )
 	NVIC_ClearPendingIRQ(ID_CAN0);
 	//sei();*/
 }
+
