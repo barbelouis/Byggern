@@ -17,15 +17,8 @@
 #define clk	1000000					//clk frequency used for the PWM signal ( mck/devider = 1MHZ => easier to work with )
 #define start_periode 0.075			//Middle Position of Servo => 1.5mS/20mS
 
-/*
-#define PMC_SCER_PCK0 = 1;
-#define  PMC_SCER_PCK1 = 1; 
-#define  PMC_SCER_PCK2 = 1; 
-*/
 
-
-	
-double servo_init(void){
+void servo_init(void){
 	
 	PIOC -> PIO_ABSR |= PIO_PC19B_PWMH5 | PIO_PC18B_PWMH6;										//AB-Select Register 
 	PIOC -> PIO_PDR |= PIO_PC19B_PWMH5 |PIO_PC18B_PWMH6;										//PIO Disable Register 
@@ -35,9 +28,7 @@ double servo_init(void){
 	
 	PWM ->PWM_CLK = PWM_CLK_PREA(0) | PWM_CLK_DIVA(devider);
 	
-// 	PWM-> PWM_CH_NUM[5].PWM_CMR = PWM_CMR_CPRE_MCK_DIV_2;										//Set devider Moder 
-// 	PWM ->PWM_CH_NUM[5].PWM_CMR = PWM_CMR_CPRE_CLKA;											//Channel mode register set Prescaler on clock A
-	
+	PWM->PWM_CH_NUM[5].PWM_CMR = PWM_CMR_CPRE_CLKA;
 	
 	int CPRD = signal_period * mck	/ devider;													//Channel period register
 	
@@ -45,13 +36,11 @@ double servo_init(void){
 	
 	PWM ->PWM_CH_NUM[5].PWM_CDTY = (signal_period*clk*(1-start_periode));						//Channel duty cycle register
 	
-	PWM -> PWM_ENA = PWM_ENA_CHID5;													//Enable of PWM channel 
-	double current_pulsewidth = (signal_period*clk*(1-start_periode));
-	return current_pulsewidth;	
+	PWM -> PWM_ENA = PWM_ENA_CHID5;																//Enable of PWM channel 	
 }
 
 	
-void servo_drive(double duty){
+void servo_set_pos(double duty){
 	PWM -> PWM_CH_NUM[5].PWM_CDTY = (signal_period*clk*(1-duty));
 	}
 	
@@ -69,49 +58,38 @@ void servo_set(double pulsewidth){																//calculation of dutycycle
 	else{
 		dutycycle = pulsewidth/signal_period;
 	}
-	servo_drive(dutycycle);
+	servo_set_pos(dutycycle);
 	}
 	
-void servo_angle(char joystick_position,double current_pulsewidth){
+void servo_map(int horizontalposition){
 	
-	double pulsewidth = current_pulsewidth;
+	double pulsewidth;
 	
-	if(joystick_position == 'R'){
-		pulsewidth += 0.0001;
-	}
-	if (joystick_position == 'L')
+	pulsewidth = (horizontalposition*(0.002-0.001)/255) + 0.001;
+	
+	if (pulsewidth == 0)
 	{
-		pulsewidth -= 0.0001;
-	}
-	if (joystick_position == 'C')
-	{
-		pulsewidth = 0.075;
+		pulsewidth = 0.001; 
 	}
 	
 	servo_set(pulsewidth);
-// 	}
-// 	
-// 	double duty;
-// 	
-// 	double pulse_width = (1+angle/180)/1000;
-// 	
-// 	if (pulse_width <= 0.0021 && pulse_width >= 0.0009)
-// 	{
-// 		duty = pulse_width/0.02;
-// 	}
-// 	else if (pulse_width < 0.0009){
-// 		duty = 0.0009/0.02;
-// 	}
-// 	else {
-// 		duty = 0.0021/0.002;
-// 	}
-// 	printf("servo_angle function");
-// 	printf("%d\n\r",duty);
-// 	servo_drive(duty);
+}
+
+void servo_move(char position){
+	if (position == 'L'){
+		servo_map(0);
+	}
+	else if (position == 'C'){
+		servo_map(128);
+	}
+	else if (position == 'R'){
+		servo_map(255);
+	}
 }
 
 
 //Extracted from arduino map
+/*
 double map(double x, double in_min, double in_max, double out_min, double out_max) {			
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
@@ -162,3 +140,4 @@ double decrease_duty(double current_duty, double increment){
 	//servo_drive(res);
 	return res;
 }
+*/

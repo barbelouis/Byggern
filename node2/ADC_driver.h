@@ -2,8 +2,7 @@
 #define ADC_DRIVER_H_
 
 void ADC_init();
-int ADC_get_value();
-int ADC_get_boolean();
+int ADC_boolean_read();
 
 
 #endif

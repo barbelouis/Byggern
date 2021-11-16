@@ -9,15 +9,12 @@
 #ifndef SERVO_DRIVER_H_
 #define SERVO_DRIVER_H_
 
-double servo_init(void);
-void servo_drive(double pulse_with);
+void servo_init(void);
+void servo_set_pos(double duty);
 void servo_angle(int angle);
 void servo_set(double pulsewitdh);
-
-
-void servo_angle(char joystick_position,double current_pulsewidth);
-
-
+void servo_map(int horizontalposition);
+void servo_move(char position);
 
 double map(double x, double in_min, double in_max, double out_min, double out_max);
 float mapf(float x, float in_min, float in_max, float out_min, float out_max);

@@ -16,6 +16,7 @@
 #include "ADC_driver.h"
 #include "encoder_driver.h"
 #include "delay.h"
+#include "pid_controller.h"
 //#include <time.h>
 
 //extract https://stackoverflow.com/questions/7004743/unable-to-link-to-gettimeofday-on-embedded-system-elapsed-time-suggestions
@@ -64,7 +65,8 @@ int main()
     //can_send(&can_msg, 0);
     //printf("Message sent\n\r");
     motor_PID(30, range);
-    delayms(2500);
+    //PID_controller(30, range);
+    delayms(500);
    // now = time(0);
     //printf("time %d\n\r", now);
 

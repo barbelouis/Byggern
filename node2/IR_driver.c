@@ -6,8 +6,12 @@ void IR_init(){
 	ADC_init();
 	//To complete
 	//should init interrupt
-	if(ADC_get_boolean){
+	//if(ADC_get_boolean){
 		//send interrupt
 		//send IR CAN message to node1
 	}
+	
+
+void IR_CAN_send(int score){
+
 }
