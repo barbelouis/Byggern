@@ -131,7 +131,7 @@ void motor_PID(int target, int range)
 	int encoder = encoder_read();
 	int position = map(encoder, 0, range, 0, 100);
 	int error = target - position;
-	int Kp = 25;
+	int Kp = 7;
 	int pid_result = error * Kp;
 	printf("encoder: %d | position: %d | erreur: %d\n\r", encoder, position, error);
 	if (error > 0.0)

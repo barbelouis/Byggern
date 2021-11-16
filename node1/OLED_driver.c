@@ -58,10 +58,10 @@ void OLED_init()
 void write_c(uint16_t command)
 {
         volatile char *ext_ram = (char *)0x1000; // Start address for the OLED
-        DDRB = 0x01;                             // initialize port B
-        PORTB = 0b00000000;                      // PB0 = High = Vcc
+        //DDRB = 0x01;                             // initialize port B
+        //PORTB = 0b00000000;                      // PB0 = High = Vcc
         ext_ram[0] = command;
-        PORTB = 0b00000001; // PB0 = Low
+        //PORTB = 0b00000001; // PB0 = Low
 }
 
 /**
@@ -72,10 +72,10 @@ void write_c(uint16_t command)
 void write_d(uint16_t command)
 {
         volatile char *ext_ram = (char *)0x1200; // Start address for the OLED
-        DDRB = 0x01;                             // initialize port B
-        PORTB = 0b00000001;                      // PB0 = High = Vcc
+        //DDRB = 0x01;                             // initialize port B
+        //PORTB = 0b00000001;                      // PB0 = High = Vcc
         ext_ram[0] = command;
-        PORTB = 0b00000000; // PB0 = Low
+        //PORTB = 0b00000000; // PB0 = Low
 }
 
 /**
@@ -86,8 +86,8 @@ void write_d(uint16_t command)
 void OLED_goto_line(line)
 {
         write_c(0xB0 | line);
-        write_c(0x00);
-        write_c(0x10);
+        //write_c(0x00);
+        //write_c(0x10); //commented 15/11
 }
 
 /**
@@ -240,3 +240,885 @@ void OLED_print(char* string){
         
         OLED_print(string);
 }*/
+
+void OLED_print_title()
+{
+
+        ///////////////////////////LINE2
+        OLED_goto_column(2);
+        for (int i = 5; i < 14; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 17; i < 28; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 37; i < 44; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 49; i < 52; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 61; i < 64; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 65; i < 76; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 97; i < 100; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 107; i < 112; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+        for (int i = 117; i < 124; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        //////////////////////////////LINE3
+
+        OLED_goto_column(3);
+
+        for (int i = 1; i < 4; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 13; i < 16; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 17; i < 20; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 27; i < 32; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 33; i < 36; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 45; i < 48; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 49; i < 52; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 61; i < 64; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 77; i < 80; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 97; i < 100; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 107; i < 112; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 113; i < 116; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 125; i < 128; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        //////////////////////////////////LINE4
+
+        OLED_goto_column(4);
+        for (int i = 1; i < 4; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 17; i < 28; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 33; i < 36; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 45; i < 48; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 49; i < 52; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 61; i < 64; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 65; i < 76; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 97; i < 108; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 113; i < 116; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 125; i < 128; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        ///////////////////////LINE5
+
+        OLED_goto_column(5);
+
+        for (int i = 1; i < 4; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 17; i < 24; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 33; i < 36; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 45; i < 48; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 49; i < 52; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 61; i < 64; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 65; i < 68; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 109; i < 112; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 113; i < 116; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 125; i < 128; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        ////////////////////////////////LINE6
+
+        OLED_goto_column(6);
+
+        for (int i = 1; i < 4; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 9; i < 16; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 17; i < 20; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 25; i < 28; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 133; i < 36; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 45; i < 48; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 49; i < 52; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 61; i < 64; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 65; i < 68; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 109; i < 112; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 113; i < 116; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 125; i < 128; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        ////////////////////////////////LINE7
+
+        OLED_goto_column(7);
+
+        for (int i = 5; i < 12; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 17; i < 20; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 29; i < 32; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 37; i < 44; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 53; i < 60; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 65; i < 68; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 109; i < 112; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+
+        for (int i = 117; i < 124; i++)
+        {
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+}
+
+void OLED_print_u()
+{
+
+        //OLED_reset();
+
+        for (int i = 2; i < 6; i++)
+        {
+                OLED_goto_column(0);
+                OLED_goto_line(i);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        }
+        OLED_goto_column(8);
+        OLED_goto_line(1);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+        OLED_goto_column(64);
+        OLED_goto_line(6);
+        write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+                write_d(0xff);
+
+}
+void print_pixel()
+{
+        write_d(0xff);
+        write_d(0xff);
+        write_d(0xff);
+        write_d(0xff);
+        write_d(0xff);
+        write_d(0xff);
+        write_d(0xff);
+        write_d(0xff);
+}

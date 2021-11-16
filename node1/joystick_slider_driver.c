@@ -8,6 +8,7 @@
  */
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/ADC_driver.h"
 #include <stdio.h>
+#include <avr/io.h>
 #include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/joystick_slider_driver.h"
 
 /**
@@ -116,4 +117,9 @@ void print_sensors()
     printf("JOYSTICK:   %c \n", get_joystick_direction());
     printf("Left slider:     %4d \n", get_left_slider_percentage());
     printf("Right slider:    %4d \n", get_right_slider_percentage());
+}
+
+int get_joystick_press()
+{
+    return!(PINB & 0x02);
 }

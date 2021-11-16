@@ -125,7 +125,7 @@ void CAN_send(struct Message message)
     printf("sent message: ");
     for (int i = 0; i < message.length; i++)
     {
-        printf("%c", message.data[i]);
+        printf("%x", message.data[i]);
     }
     printf("\n\n");
 }
@@ -199,3 +199,5 @@ ISR(INT0_vect)
 }
 
 ISR(BADISR_vect) {}
+
+//void message_handler()

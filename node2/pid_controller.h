@@ -3,11 +3,14 @@
 
 struct PID_settings
 {
-   int Kp;
-   int Ki;
-   int Kd;
+   float Kp;
+   float Ki;
+   float Kd;
+   int previous_error;
+   int sum_errors;
 
 }PID;
+
 int pid(int target, int current);
 
 

@@ -25,8 +25,6 @@
 int main(void)
 {
 
-    
-
     //Set register for use of JTAG
     //MCUCR =0b1xxxxxxx;
     MCUCR |= (1 << SRE);
@@ -35,7 +33,6 @@ int main(void)
 
     //init USART for communicqtion and printing
     USART_Init(MYUBRR);
-
 
     printf("===== RESET =====\n");
 
@@ -60,7 +57,7 @@ int main(void)
     {
         printf("%x ", message.data[i]);
     }
-/*
+    /*
     while (1)
     {
 
@@ -84,63 +81,63 @@ int main(void)
 
     return 0;
     */
-
     
-
-    while(1){
+    while (1)
+    {
+        //OLED_print_title();
+        OLED_print_u();
         //continue;
         printf("==== LOOP ====\n\n");
-        _delay_ms(3000);
+        _delay_ms(200);
         //send_right_slider_position_to_node2();
+       /*
         menu=make_menu(current_option,selected_option);
         current_option=menu.current_option;
         selected_option= menu.selected_option;
+        */
         
-       
-       //CAN_send(message);
-       //send_joystick_position_to_node2();
-        if(flag){
-          //  printf("Interrupt received\n");
+        //char dir = get_joystick_direction();
+        //printf("joystick: %c\n", dir);
+        //CAN_send(message);
+        //send_joystick_analog_horizontal_position_to_node2();
+        //send_joystick_position_to_node2();
+        send_sensors_data_to_node2();
+        if (flag)
+        {
+            //  printf("Interrupt received\n");
             uint8_t status;
             uint8_t error;
             uint8_t rec;
             uint8_t tec;
             //status= MCP2515_read_status();
-            
 
-            status= MCP2515_read(MCP_CANINTF);
-            error= MCP2515_read(MCP_EFLG);
-            rec= MCP2515_read(MCP_REC);
-            tec= MCP2515_read(MCP_TEC);
-            printf("status: %x\n",status);
-            printf("error flag: %x\n",error);
-            printf("REC: %x\n",rec);
-            printf("TEC: %x\n",tec);
-            if((0x3 & status)){
+            status = MCP2515_read(MCP_CANINTF);
+            error = MCP2515_read(MCP_EFLG);
+            rec = MCP2515_read(MCP_REC);
+            tec = MCP2515_read(MCP_TEC);
+            printf("status: %x\n", status);
+            printf("error flag: %x\n", error);
+            printf("REC: %x\n", rec);
+            printf("TEC: %x\n", tec);
+            if ((0x3 & status))
+            {
                 //cli();
-                CAN_receive(&received_message,status & 0x3);
+                CAN_receive(&received_message, status & 0x3);
                 //CAN_receive(&received_message,0x2);
                 //sei();
                 printf("\n");
-                printf("received ID: %x\n",received_message.id);
-                printf("received length: %d\n",received_message.length);
+                printf("received ID: %x\n", received_message.id);
+                printf("received length: %d\n", received_message.length);
                 printf("received message: ");
-           //     printf("%x ",received_message.data);
-              
-                for(int i=0; i< received_message.length; i++){
-                    printf("%c",received_message.data[i]);
-                    
-                } 
+                //     printf("%x ",received_message.data);
+
+                for (int i = 0; i < received_message.length; i++)
+                {
+                    printf("%c", received_message.data[i]);
+                }
 
                 printf("\n\n");
-
             }
-            
         }
-        
-    
-    
     }
-
-
 }

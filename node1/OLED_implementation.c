@@ -21,13 +21,13 @@ static struct Option option0 = {NULL, "Options:", "A", "B", "C", NULL, NULL, NUL
 /*
 GAME MENU
 static struct Option home={NULL, "HOME", "Play", "Settings", "", NULL, NULL, NULL};
-static struct Option play={NULL, "PLAY", "3 lifes", "5 lifes", "10 lifes", NULL, NULL, NULL};
+static struct Option play={NULL, "PLAY", "easy", "normal", "hard", NULL, NULL, NULL};
 static struct Option settings={NULL, "SETTINGS", "Calibrate", "Credits", "", NULL, NULL, NULL};
 static struct Option calibration={NULL, "CALIBRATION", "", "", "", NULL, NULL, NULL};
 static struct Option credits={NULL, "CREDITS", "Louis BARBE", "Michel SCHneider", "", NULL, NULL, NULL};
-static struct Option lifes3={NULL, "3 Lifes", "", "", "", NULL, NULL, NULL};
-static struct Option lifes5={NULL, "5 Lifes", "", "", "", NULL, NULL, NULL};
-static struct Option lifes10={NULL, "10 Lifes", "", "", "", NULL, NULL, NULL};
+static struct Option easy={NULL, "EASY", "", "", "", NULL, NULL, NULL};
+static struct Option normal={NULL, "NORMAL", "", "", "", NULL, NULL, NULL};
+static struct Option hard={NULL, "HARD", "", "", "", NULL, NULL, NULL};
 
 */
 /**
@@ -83,10 +83,12 @@ void make_options(char *title, int cursorPosition, char *o1, char *o2, char *o3)
      {
           OLED_print("# ");
      }
+     
      OLED_goto_line(5);
      OLED_goto_column(20);
-     //OLED_print("<");
+     ///OLED_print("<");
      OLED_test();
+     
 }
 
 /**
@@ -148,9 +150,9 @@ GAME OPTIONS MAPPING
      home.next_3 = &home;
 
      play.previous_option = &home;
-     play.next_1 = &lifes3;
-     play.next_2 = &lifes5;
-     play.next_3 = &lifes10;
+     play.next_1 = &easy;
+     play.next_2 = &normal;
+     play.next_3 = &hard;
 
      settings.previous_option = &home;
      settings.next_1 = &calibrate;
@@ -178,14 +180,16 @@ struct Menu make_menu(struct Option current_option, int selected_option)
 {
 
      //Define input for joystick push button
-     DDRB &= 0x00;
-     PORTB |= 0x02;
+
+     //DDRB &= 0x00;
+     //PORTB |= 0x02;
 
      // int selected_option=1;
      // struct Option current_option=option0;
 
      print_option(current_option, selected_option);
      char joystick_position = get_joystick_direction();
+     //char joystick_position = 'C';
      if (joystick_position == 'T' && selected_option != 1)
      {
           selected_option = selected_option - 1;
@@ -222,6 +226,7 @@ struct Menu make_menu(struct Option current_option, int selected_option)
           current_option = *current_option.previous_option;
           OLED_reset();
      }
+     
      /*
        printf("\n next: ");
        printf(current_option.title);

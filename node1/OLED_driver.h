@@ -20,4 +20,6 @@ void OLED_test();
 void OLED_test2();
 void OLED_print_ASCII(int code);
 void OLED_print(char* c);
+void OLED_print_title();
+void OLED_print_u();
 #endif 
