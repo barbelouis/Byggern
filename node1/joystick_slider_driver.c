@@ -119,7 +119,11 @@ void print_sensors()
     printf("Right slider:    %4d \n", get_right_slider_percentage());
 }
 
+/**
+ * \fn int get_joystick_press()
+ * \brief Check for joystick press
+ */
 int get_joystick_press()
 {
-    return!(PINB & 0x02);
+    return !(PINB & 0x02);
 }

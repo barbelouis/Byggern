@@ -7,11 +7,10 @@ struct ADC_driver
    int input1;
    int input2;
    int input3;
-}ADC_MAX;
-
+} ADC_MAX;
 
 void ADC_init();
 void read_ADC_input();
 void print_ADC_values();
 
-#endif 
+#endif

@@ -241,12 +241,13 @@ void OLED_print(char *c)
         }
 }
 
-void OLED_set_brightness(int brighness) {
-	write_c(0x81);
-	write_c(brighness);
+/**
+ * \fn OLED_set_brightness(int brighness)
+ * \brief Set the brihghtness
+ * \param int brightness
+ */
+void OLED_set_brightness(int brightness)
+{
+        write_c(0x81);
+        write_c(brightness);
 }
-/*
-void OLED_print(char* string){
-        
-        OLED_print(string);
-}*/

@@ -6,7 +6,7 @@
 void OLED_print_title();
 void OLED_print_u();
 void OLED_life_menu(int nb_lives, int current_lives, int difficulty);
-void Oled_number_of_lives(int number_of_lives,int current_lives);
+void OLED_number_of_lives(int number_of_lives, int current_lives);
 void OLED_draw_hearts();
 void print_pixel(int n, int size);
 void OLED_goto_pixel(int line, int column);
@@ -20,17 +20,16 @@ void Oled_print_full();
 void Oled_print_column1();
 void OLED_calibration();
 
-
 struct Option
 {
-   struct Option* previous_option;
-   char* title;
-   char* o_1;
-   char* o_2;
-   char* o_3;
-   struct Option* next_1;
-   struct Option* next_2;
-   struct Option* next_3;
+   struct Option *previous_option;
+   char *title;
+   char *o_1;
+   char *o_2;
+   char *o_3;
+   struct Option *next_1;
+   struct Option *next_2;
+   struct Option *next_3;
 };
 
 struct Menu
@@ -39,12 +38,10 @@ struct Menu
    int selected_option;
 };
 
-void make_options(char* title, int cursorPosition, char* option1, char* option2, char* option3);
+void make_options(char *title, int cursorPosition, char *option1, char *option2, char *option3);
 void clean_selected();
 struct Menu make_menu(struct Option current_option, int selected_option);
 struct Option define_options();
 void print_option(struct Option option, int selected_option);
 
-
-
-#endif 
+#endif

@@ -17,4 +17,4 @@ char SPI_SlaveReceive(void);
 void SPI_write(uint8_t data);
 uint8_t SPI_read();
 
-#endif 
+#endif

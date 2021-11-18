@@ -200,4 +200,43 @@ ISR(INT0_vect)
 
 ISR(BADISR_vect) {}
 
-//void message_handler()
+/**
+ * \fn check_can_message()
+ * \brief Check for received message
+ */
+void check_can_message()
+{
+    if (flag)
+    {
+
+        uint8_t status;
+        uint8_t error;
+        uint8_t rec;
+        uint8_t tec;
+
+        status = MCP2515_read(MCP_CANINTF);
+        error = MCP2515_read(MCP_EFLG);
+        rec = MCP2515_read(MCP_REC);
+        tec = MCP2515_read(MCP_TEC);
+        printf("status: %x\n", status);
+        printf("error flag: %x\n", error);
+        printf("REC: %x\n", rec);
+        printf("TEC: %x\n", tec);
+        if ((0x3 & status))
+        {
+            CAN_receive(&received_message, status & 0x3);
+            printf("\n");
+            printf("received ID: %x\n", received_message.id);
+            printf("received length: %d\n", received_message.length);
+            printf("received message: ");
+
+            for (int i = 0; i < received_message.length; i++)
+            {
+                printf("%c", received_message.data[i]);
+            }
+            message_handler(received_message);
+
+            printf("\n\n");
+        }
+    }
+}
