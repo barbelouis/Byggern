@@ -1,6 +1,19 @@
+/**
+ * \file encoder_driver.c
+ * \brief Encoder driver
+ * \author Louis Barbe & Michel Schneider
+ * \version 1
+ * \date 18 november 2021
+ *
+ */
+
 #include "encoder_driver.h"
 #include "delay.h"
 
+/**
+ * \fn void encoder_init()
+ * \brief Initialization of the encoder
+ */
 void encoder_init()
 {
 
@@ -35,6 +48,10 @@ void encoder_init()
 	PIOC->PIO_PUDR = 0x1fe;
 }
 
+/**
+ * \fn uint16_t encoder_read()
+ * \brief Read the encoder value
+ */
 uint16_t encoder_read()
 {
 	//Set !OE low to enable output of encoder
@@ -63,6 +80,10 @@ uint16_t encoder_read()
 	return result;
 }
 
+/**
+ * \fn void encoder_reset()
+ * \brief Reset the encoder
+ */
 void encoder_reset()
 {
 	//set counter to 0

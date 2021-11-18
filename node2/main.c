@@ -22,6 +22,10 @@
 #include "game.h"
 //#include <time.h>
 
+/**
+ * \fn main()
+ * \brief main of the project
+ */
 int main()
 {
 

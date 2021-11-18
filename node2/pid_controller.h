@@ -10,9 +10,8 @@ typedef struct
    int sum_errors;
    int max;
 
-}PID_settings;
+} PID_settings;
 
 int PID_controller(int target, int current);
-
 
 #endif

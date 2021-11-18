@@ -3,8 +3,7 @@
  *
  * Created: 01.11.2021 15:23:30
  *  Author: micheljs
- */ 
-
+ */
 
 #ifndef SERVO_DRIVER_H_
 #define SERVO_DRIVER_H_
@@ -19,6 +18,4 @@ double change_duty(double current_duty, double increament);
 double increase_duty(double current_duty, double increament);
 double decrease_duty(double current_duty, double increament);
 
-
-
-#endif /* SERVO_DRIVER_H_ */
+#endif

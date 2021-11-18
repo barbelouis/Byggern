@@ -1,18 +1,16 @@
+/**
+ * \file game.c
+ * \brief Game implementation
+ * \author Louis Barbe & Michel Schneider
+ * \version 1
+ * \date 18 november 2021
+ *
+ */
 #include "game.h"
 #include "uart_and_printf/uart.h"
 #include "uart_and_printf/printf-stdarg.h"
 #include "can_controller.h"
 #include "motor_driver.h"
-/*
-CAN_MESSAGE can_IR_msg; //or malloc
-  //can_msg->data[0] = 0xFF;
-  can__IR_msg.data[0] =0x01;
-  can_IR_msg.id = 0x41;
-  can_IR_msg.data_length = 1;
-  */
-
-
-
 
 static struct input_user
 {
@@ -23,6 +21,15 @@ static struct input_user
     int button;
 } input;
 
+/**
+ * \fn void set_new_user_input(int joystick_x, int joystick_y, int left_slider, int right_slider, int button)
+ * \brief Set the new user input
+ * \param joystick_x
+ * \param joystick_y
+ * \param left_slider
+ * \param right_slider
+ * \param button
+ */
 void set_new_user_input(int joystick_x, int joystick_y, int left_slider, int right_slider, int button)
 {
     input.joystick_x = joystick_x;
@@ -32,6 +39,10 @@ void set_new_user_input(int joystick_x, int joystick_y, int left_slider, int rig
     input.button = button;
 }
 
+/**
+ * \fn void game()
+ * \brief Game: mapping sensors and actuators
+ */
 void game()
 {
     printf("X: %d | Y: %d | L: %d | R: %d | button: %d\n\r", input.joystick_x, input.joystick_y, input.left_slider, input.right_slider, input.button);
@@ -41,9 +52,9 @@ void game()
         solenoid_hit();
         printf("HIT\n\r");
     }
-    int speed=0;
-   motor_PID(input.left_slider, get_range()); //0x21e7
-   /*
+    int speed = 0;
+    motor_PID(input.left_slider, get_range()); //0x21e7
+                                               /*
    if (input.joystick_x>170){
        speed = map(input.joystick_x,170,255,0,1200);
    }
