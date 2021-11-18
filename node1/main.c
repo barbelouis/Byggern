@@ -1,20 +1,31 @@
+/*
+ * Node1.c
+ *
+ * Created: 16.11.2021 20:04:28
+ * Author : Miche
+ */ 
+
+#include <avr/io.h>
 /// \file
 #define FOSC 4915200 // Clock Speed
 #define F_CPU 4915200
 #define BAUD 9600
 #define MYUBRR FOSC / 16 / BAUD - 1
 
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/UART_driver.h"
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/ADC_driver.h"
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/joystick_slider_driver.h"
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/OLED_driver.h"
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/OLED_implementation.h"
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/SPI_driver.h"
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/MCP2515_driver.h"
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/CAN_driver.h"
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/sensors_over_CAN_driver.h"
+#include "UART_driver.h"
+#include "ADC_driver.h"
+#include "joystick_slider_driver.h"
+#include "OLED_driver.h"
+#include "OLED_implementation.h"
+#include "SPI_driver.h"
+#include "MCP2515_driver.h"
+#include "CAN_driver.h"
+#include "sensors_over_CAN_driver.h"
+#include "message_handler.h"
 
-//#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/fonts.h"
+#include "joystick_slider_driver.h"
+
+//#include "fonts.h"
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdio.h>
@@ -42,10 +53,10 @@ int main(void)
 
     OLED_reset();
 
-    int selected_option = 1;
+   // int selected_option = 1;
 
-    struct Option current_option = define_options();
-    struct Menu menu; //={define_options(),1};
+    //struct Option current_option = define_options();
+    //struct Menu menu; //={define_options(),1};
 
     CAN_init();
 
@@ -81,20 +92,47 @@ int main(void)
 
     return 0;
     */
-    
+	//OLED_print_title();
+	//_delay_ms(1500);
+	//OLED_reset();
+	
+	//OLED_print_title();
+	OLED_reset();
+	
     while (1)
     {
+		//OLED_print_title_brighter();
+		//OLED_print_title_less_bright();
+		//joystick_pressed();
+		game_start();
+
+		
+		
+		
+		
+		
+		//_delay_ms(1000);
         //OLED_print_title();
-        OLED_draw_hearts();
-        
-
-
+        //OLED_draw_hearts();
+		//OLED_print_u();
+		/*
+		OLED_life_menu(3, 3, 0);
+		/*
+		_delay_ms(2000);
+		OLED_life_menu(3,2,0);
+		_delay_ms(2000);
+		OLED_life_menu(3,1,0);
+		_delay_ms(2000);
+		OLED_life_menu(3,0,0);
+		*/
+		
+	//game_start();
 
         //continue;
         printf("==== LOOP ====\n\n");
         _delay_ms(200);
         //send_right_slider_position_to_node2();
-       /*
+     /*  
         menu=make_menu(current_option,selected_option);
         current_option=menu.current_option;
         selected_option= menu.selected_option;
@@ -105,7 +143,7 @@ int main(void)
         //CAN_send(message);
         //send_joystick_analog_horizontal_position_to_node2();
         //send_joystick_position_to_node2();
-        send_sensors_data_to_node2();
+        
         if (flag)
         {
             //  printf("Interrupt received\n");
@@ -139,9 +177,12 @@ int main(void)
                 {
                     printf("%c", received_message.data[i]);
                 }
-
+				//message_handler(received_message);
+				new_goal();
                 printf("\n\n");
             }
         }
     }
 }
+
+

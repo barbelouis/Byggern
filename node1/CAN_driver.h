@@ -10,7 +10,7 @@ typedef struct Message
     uint16_t id;
     int length;
     //uint8_t data[8];
-    char data[8];
+    uint8_t data[8];
 } CAN_MESSAGE;
 
 void CAN_init();

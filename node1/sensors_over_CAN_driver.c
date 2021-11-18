@@ -7,9 +7,9 @@
  *
  */
 
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/CAN_driver.h"
+#include "CAN_driver.h"
 #include <stdio.h>
-#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/joystick_slider_driver.h"
+#include "joystick_slider_driver.h"
 
 /**
  * \fn void send_joystick_position_to_node2()
@@ -40,7 +40,7 @@ void send_sensors_data_to_node2()
 {
     struct Message joystick_can_msg;
     joystick_can_msg.data[0] = get_joystick_horizontal_analog_position();
-    printf("joystick: %x\n", joystick_can_msg.data[0]);
+  //  printf("joystick: %x\n", joystick_can_msg.data[0]);
     joystick_can_msg.data[1] = get_joystick_vertical_analog_position();
     joystick_can_msg.data[2] = get_left_slider_analog_position();
     joystick_can_msg.data[3] = get_right_slider_analog_position();
