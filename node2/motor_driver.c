@@ -4,6 +4,9 @@
 #include "encoder_driver.h"
 #include "pid_controller.h"
 
+
+static int previous_encoder=0; 
+static int range=0x21e7;
 void motor_init()
 {
 	//DACC->DACC_CR_SWRST=0x00000001;
@@ -56,7 +59,7 @@ void motor_drive_left(int speed)
 	//enable direction (motorbox datasheet)
 	//MJ1 PIN 7: DIR => PIN 30 =>PD10
 	PIOD->PIO_CODR = PIO_PD10;
-
+	
 	//enable motor (motorbox datasheet)
 	//MJ1 PIN 6: EN => PIN 32 =>PD9
 	PIOD->PIO_SODR = PIO_PD9;
@@ -85,8 +88,12 @@ uint32_t motor_calibration()
 	delayms(2000);
 	//motor_stop();
 	//delayms(1000);
-	uint32_t range = encoder_read();
+	range = encoder_read();
 	motor_stop();
+	return range;
+}
+
+int get_range(){
 	return range;
 }
 
@@ -123,17 +130,31 @@ void motor_PID(int target, int range)
 void motor_PID(int target, int range)
 {
 	int encoder = encoder_read();
-	int position = map(encoder, 0, range, 0, 100);
 
+	int position = map(encoder, 0, range, 0, 255);
 	int pid_result = PID_controller(target, position);
-	if (pid_result > 0.0)
+
+	//int speed= encoder- previous_encoder;
+	//previous_encoder=encoder;
+	//int speed_target=map(target,0,200,-1000,1000);
+	
+
+
+
+	//int pid_speed_result = PID_controller(speed_target,speed);
+
+	motor_drive(pid_result);
+}
+
+void motor_drive(int speed){
+	if (speed > 0.0)
 	{
 		//printf("in if\n\r");
-		motor_drive_left(pid_result);
+		motor_drive_left(speed);
 	}
 	else
 	{
 		//printf("in else\n\r");
-		motor_drive_right(-pid_result);
+		motor_drive_right(-speed);
 	}
 }

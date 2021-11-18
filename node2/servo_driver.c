@@ -65,7 +65,7 @@ void servo_map(int horizontalposition){
 	
 	double pulsewidth;
 	
-	pulsewidth = (horizontalposition*(0.002-0.001)/255) + 0.001;
+	pulsewidth = (horizontalposition*(0.002-0.001)/246) + 0.001;
 	
 	if (pulsewidth == 0)
 	{

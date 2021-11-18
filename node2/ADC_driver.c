@@ -36,7 +36,8 @@ long counter = 0;
 // //can_msg->data[0] = 0xFF;
 // is_goal->data[0] = 'G';
 // is_goal->id = 0;
-// is_goal->data_length = 1; 
+// is_goal->data_length = 1; 
+
 
 void ADC_init(){
 	PMC->PMC_PCER1 |= PMC_PCER1_PID37;
@@ -53,18 +54,20 @@ int ADC_boolean_read(){
 	//printf("value: %d\n\r", (int)ADC->ADC_CDR[0]);		//Channel Data Register
 	//printf("test: %d\n\r", (int)ADC->ADC_LCDR);		//Last converted data register => not necassairy for the moment
 	//printf("value:  %d\n\r", RTT->RTT_VR);
-	if(RTT->RTT_VR >= 1){									//internal clock to count the seconds 
+	if(RTT->RTT_VR >= 2){									//internal clock to count the seconds 
 		counter = 0; 
 		//printf("value:  %d\n\r", counter);
 	}
 	val = ADC->ADC_LCDR;
 	/*x = RTT->RTT_VR;*/
 	//printf("value:  %d\n\r", val);
+	//printf("counter:  %d\n\r", counter);
 	if(val > 1800 &&  counter == 0){
 // 		printf("GOAL!!!\n\r");
 // 		score++;
 // 		printf("Score: %d\n\r",score);
-		counter = RTT->RTT_MR |= RTT_MR_RTTRST;
+		counter = 1;
+		RTT->RTT_MR |= RTT_MR_RTTRST;
 		return 1; 
 		//ADC_send_boolean(1);
 		//printf("Remove Ball");

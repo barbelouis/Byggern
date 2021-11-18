@@ -26,6 +26,11 @@ void message_handler(CAN_MESSAGE message){
 		motor_PID(slider,0x21e7);
 		break;
 		*/
+	break;
+	}
+	case 43:
+	{
+		motor_calibration();
 	}
 	}
 

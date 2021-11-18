@@ -3,7 +3,7 @@
 #include "sam.h"
 
 
-static PID_settings PID ={10,0.5,0,0,0,1000};
+static PID_settings PID ={20,0.8,0.2,0,0,1000}; // perfect PID: 20,0.8,0.2,0,0,1000
 int PID_controller(int target, int current)
 {
 	int error = target - current;
