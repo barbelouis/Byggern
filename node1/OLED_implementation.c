@@ -261,17 +261,20 @@ void OLED_game_over()
 	for (int i = 0; i < 256; i++)
 	{
 		OLED_set_brightness(i);
-		OLED_goto_line(4);
+
+		OLED_goto_line(3);
 		OLED_goto_column(28);
 		OLED_print("GAME OVER");
+		OLED_print_skull_bones(4, 56);
 	}
 
-	for (int i = 256; i >= 0; i--)
+	for (int i = 255; i >= 0; i--)
 	{
 		OLED_set_brightness(i);
-		OLED_goto_line(4);
+		OLED_goto_line(3);
 		OLED_goto_column(28);
 		OLED_print("GAME OVER");
+		OLED_print_skull_bones(4, 56);
 	}
 }
 
@@ -351,52 +354,6 @@ void Oled_print_full()
 	write_d(0xff);
 }
 
-void OLED_print_u()
-{
-
-	OLED_goto_line(1);
-	for (int i = 2; i < 11; i++)
-	{
-		OLED_goto_column(i);
-		if (i != 5 && i != 6 && i != 7)
-		{
-			write_d(1);
-		}
-	}
-	for (int i = 1; i < 12; i++)
-	{
-		OLED_goto_column(i);
-		if (i != 6)
-		{
-			write_d(1);
-		}
-	}
-	for (int i = 0; i < 13; i++)
-	{
-		write_d(1);
-	}
-
-	for (int i = 0; i < 13; i++)
-	{
-		write_d(1);
-	}
-
-	for (int i = 0; i < 13; i++)
-	{
-		write_d(1);
-	}
-
-	for (int i = 0; i < 13; i++)
-	{
-		write_d(1);
-	}
-
-	for (int i = 0; i < 13; i++)
-	{
-		write_d(1);
-	}
-}
-
 /**
  * \fn void OLED_life_menu(int nb_lives, int current_lives, int difficulty)
  * \brief Print the lives screen on the OLED
@@ -404,7 +361,7 @@ void OLED_print_u()
  * \param current_lives
  * \param difficulty
  */
-void OLED_life_menu(int nb_lives, int current_lives, int difficulty)
+void OLED_life_menu(int nb_lives, int current_lives)
 {
 
 	OLED_goto_line(1);
@@ -412,10 +369,6 @@ void OLED_life_menu(int nb_lives, int current_lives, int difficulty)
 	OLED_print("lives:");
 
 	OLED_number_of_lives(nb_lives, current_lives);
-
-	OLED_goto_line(5);
-	OLED_goto_column(15);
-	OLED_print("difficulty: x");
 }
 
 /**
@@ -684,99 +637,6 @@ void OLED_number_of_lives(int number_of_lives, int current_lives)
 	}
 }
 
-void OLED_draw_hearts()
-{
-
-	int refl = 1;
-	int refc = 1;
-	OLED_reset();
-	OLED_goto_pixel(0, refc);
-	OLED_print("Lifes:");
-	OLED_goto_pixel(refl, refc);
-	OLED_print_heart(1);
-	OLED_goto_pixel(refl, refc + 2);
-	OLED_print_heart(1);
-	OLED_goto_pixel(refl, refc + 4);
-	OLED_print_heart(0);
-	OLED_goto_pixel(refl, refc + 6);
-	OLED_print_heart(0);
-
-	/* 
-        OLED_goto_pixel(refl,refc+2);
-        OLED_print_line_pixels(3,0xf0);
-
-        OLED_goto_pixel(refl,refc+8);
-        OLED_print_line_pixels(3,0xf0);
-
-        OLED_goto_pixel(refl+1,refc+1);
-        OLED_print_line_pixels(5,0xf);
-        OLED_goto_pixel(refl+1,refc+7);
-        OLED_print_line_pixels(5,0xf);
-        OLED_goto_pixel(refl+2,refc);
-        OLED_print_line_pixels(12,0xff);
-        OLED_goto_pixel(refl+2,refc);
-        OLED_print_line_pixels(12,0xf);
-        OLED_goto_pixel(refl+2,refc);
-        OLED_print_line_pixels(12,0xf);
-/*
-       print_pixel_at( 5, 10,4);
-       OLED_test();
-       //print_pixel_at( 1, 10, 4);
-       
-/*
-        OLED_goto_pixel(1,1);
-        print_pixel(8,0xff);
-
-        OLED_goto_pixel(2,1);
-        print_pixel(8,0xff);
-
-        OLED_goto_pixel(3,1);
-        print_pixel(8,0xff);
-        //OLED_test();
-
-/*
-        OLED_goto_column(8);
-        OLED_goto_line(1);
-        print_pixel(8);
-/*
-        OLED_goto_column(24);
-        OLED_goto_line(1);
-        print_pixel(8);
-/*
-        OLED_goto_column(8);
-        OLED_goto_line(3);
-        print_pixel(8);
-
-        OLED_goto_column(24);
-        OLED_goto_line(2);
-        print_pixel(8);*/
-	/*
-        OLED_goto_column(16);
-        OLED_goto_line(3);
-        print_pixel(8);
-
-        OLED_goto_column(16);
-        OLED_goto_line(4);
-        print_pixel(8);
-
-        OLED_goto_column(24);
-        OLED_goto_line(1);
-        print_pixel(8);
-
-        OLED_goto_column(24);
-        OLED_goto_line(2);
-        print_pixel(8);
-
-        OLED_goto_column(24);
-        OLED_goto_line(3);
-        print_pixel(8);
-
-        OLED_goto_column(32);
-        OLED_goto_line(2);
-        print_pixel(8);
-       */
-}
-
 /**
  * \fn void print_pixel()
  * \brief Print one pixel
@@ -864,6 +724,145 @@ void OLED_print_heart(int filled)
 		write_d(0b00010001);
 		write_d(0b00001110);
 	}
+}
+
+/**
+ * \fn void OLED_print_skull(int line, int column)
+ * \brief print a skull at line and column
+ * \param line
+ * \param column
+ */
+void OLED_print_skull(int line, int column)
+{
+	OLED_goto_line(line);
+	OLED_goto_column(column);
+
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00111100);
+	write_d(0b01000010);
+	write_d(0b10011001);
+	write_d(0b00011001);
+
+	OLED_goto_line(line);
+	OLED_goto_column(column + 8);
+
+	write_d(0b01000001);
+	write_d(0b00011001);
+	write_d(0b10011001);
+	write_d(0b01000010);
+	write_d(0b00111100);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+
+	OLED_goto_line(line + 1);
+	OLED_goto_column(column);
+
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000001);
+	write_d(0b00000010);
+	write_d(0b00000101);
+
+	OLED_goto_line(line + 1);
+	OLED_goto_column(column + 8);
+
+	write_d(0b00000101);
+	write_d(0b00000101);
+	write_d(0b00000010);
+	write_d(0b00000001);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+}
+
+/**
+ * \fn void OLED_print_skull_bones(int line, int column)
+ * \brief print a skull with bones at line and column
+ * \param line
+ * \param column
+ */
+void OLED_print_skull_bones(int line, int column)
+{
+
+	OLED_goto_line(line);
+	OLED_goto_column(column);
+
+	write_d(0b00000000);
+	write_d(0b11100000);
+	write_d(0b11100000);
+	write_d(0b11100000);
+	write_d(0b10000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+
+	OLED_goto_line(line);
+	OLED_goto_column(column + 8);
+
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b10000000);
+	write_d(0b11100000);
+	write_d(0b11100000);
+	write_d(0b11100000);
+
+	OLED_goto_line(line + 1);
+	OLED_goto_column(column);
+
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00000001);
+	write_d(0b00111111);
+	write_d(0b01000011);
+	write_d(0b10011001);
+	write_d(0b00011001);
+
+	OLED_goto_line(line + 1);
+	OLED_goto_column(column + 8);
+
+	write_d(0b01000001);
+	write_d(0b00011001);
+	write_d(0b10011001);
+	write_d(0b01000011);
+	write_d(0b00111111);
+	write_d(0b00000001);
+	write_d(0b00000000);
+	write_d(0b00000000);
+
+	OLED_goto_line(line + 2);
+	OLED_goto_column(column);
+
+	write_d(0b00000000);
+	write_d(0b00000000);
+	write_d(0b00111000);
+	write_d(0b00111000);
+	write_d(0b00111100);
+	write_d(0b00001111);
+	write_d(0b00000110);
+	write_d(0b00000101);
+
+	OLED_goto_line(line + 2);
+	OLED_goto_column(column + 8);
+
+	write_d(0b00000101);
+	write_d(0b00000101);
+	write_d(0b00000110);
+	write_d(0b00001111);
+	write_d(0b00111100);
+	write_d(0b00111000);
+	write_d(0b00111000);
+	write_d(0b00000000);
 }
 
 /*

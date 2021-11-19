@@ -11,8 +11,9 @@
 #include "sam.h"
 
 ///Parameters of the PID
-static PID_settings PID = {20, 0.8, 0.2, 0, 0, 1000}; // perfect PID: 20,0.8,0.2,0,0,1000
-
+//static PID_settings PID = {10,0.5,0.3,0,0,1000}; // perfect PID: 20,0.8,0.2,0,0,1000
+static PID_settings PID = {20,0.8,0.2,0,0,1000};
+//faster 10, 3, 0.1, 0, 0, 1800
 /**
  * \fn int PID_controller(int target, int current)
  * \brief PID controller

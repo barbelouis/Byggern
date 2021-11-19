@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['oled_5fcalibration_200',['OLED_calibration',['../a00050.html#ad29f0a238485e71ba58b8515bbeb8445',1,'OLED_implementation.c']]],
+  ['oled_5fclear_5fline_201',['OLED_clear_line',['../a00044.html#a3e067170cab2a008693f1f6d280d56ec',1,'OLED_driver.c']]],
+  ['oled_5fgame_5fover_202',['OLED_game_over',['../a00050.html#a3b7555c50faa397d364e0097772b8830',1,'OLED_implementation.c']]],
+  ['oled_5fgoto_5fcolumn_203',['OLED_goto_column',['../a00044.html#a682d34cf639deddc5da7f3374f5e32a7',1,'OLED_driver.c']]],
+  ['oled_5fgoto_5fline_204',['OLED_goto_line',['../a00044.html#a6258eb7b900bb7914de9cedc3aa56e1a',1,'OLED_driver.c']]],
+  ['oled_5fgoto_5fpixel_205',['OLED_goto_pixel',['../a00050.html#a54b699ef43e117f332d1a44ded09789c',1,'OLED_implementation.c']]],
+  ['oled_5finit_206',['OLED_init',['../a00044.html#aefbfc019be3faf736d5264b93ffa446a',1,'OLED_driver.c']]],
+  ['oled_5fnumber_5fof_5flives_207',['OLED_number_of_lives',['../a00050.html#ab42eee27ffe1812da764cf4544e8e194',1,'OLED_implementation.c']]],
+  ['oled_5fprint_208',['OLED_print',['../a00044.html#a55eb07ca69e929d7c1b2459c6cd1059f',1,'OLED_driver.c']]],
+  ['oled_5fprint_5fascii_209',['OLED_print_ASCII',['../a00044.html#a54b2c10e145169e64836f4a6db2ad19a',1,'OLED_driver.c']]],
+  ['oled_5fprint_5fcolumn_210',['OLED_print_column',['../a00044.html#ac19cc88fefbf3f599e0b2b8308078aad',1,'OLED_driver.c']]],
+  ['oled_5fprint_5fheart_211',['OLED_print_heart',['../a00050.html#aee82ed07fae0de7e904bf4d1b942f7ba',1,'OLED_implementation.c']]],
+  ['oled_5fprint_5fline_212',['OLED_print_line',['../a00044.html#a5b25204574b68e1058a37cc87089adcc',1,'OLED_driver.c']]],
+  ['oled_5fprint_5fline_5fpixels_213',['OLED_print_line_pixels',['../a00050.html#ac0b974baff56eae95642c1c87c8af812',1,'OLED_implementation.c']]],
+  ['oled_5fprint_5fskull_214',['OLED_print_skull',['../a00050.html#a2450e09597fbc74df18de6cf0f2829db',1,'OLED_implementation.c']]],
+  ['oled_5fprint_5fskull_5fbones_215',['OLED_print_skull_bones',['../a00050.html#ac85ca02efbaebc85d3996ef61ab20200',1,'OLED_implementation.c']]],
+  ['oled_5fprint_5ftitle_216',['OLED_print_title',['../a00050.html#a2e8c5ee50f617b8db30ec0ad8e419770',1,'OLED_implementation.c']]],
+  ['oled_5freset_217',['OLED_reset',['../a00044.html#a91c882362664a29ea92ffaa3e8026cbd',1,'OLED_driver.c']]],
+  ['oled_5fset_5fbrightness_218',['OLED_set_brightness',['../a00044.html#ae74a0815bbc3f3538be8f546763a73ea',1,'OLED_driver.c']]],
+  ['oled_5fstart_5fanimation_219',['OLED_start_animation',['../a00050.html#a50d0ccc88dca52c934ba226e2e9fee91',1,'OLED_implementation.c']]],
+  ['oled_5ftest_220',['OLED_test',['../a00044.html#a415688e2387f820ddd88dbc0b03fd4a9',1,'OLED_driver.c']]]
+];

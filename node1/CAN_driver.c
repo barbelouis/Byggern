@@ -224,6 +224,7 @@ void check_can_message()
         printf("TEC: %x\n", tec);
         if ((0x3 & status))
         {
+            CAN_MESSAGE received_message;
             CAN_receive(&received_message, status & 0x3);
             printf("\n");
             printf("received ID: %x\n", received_message.id);

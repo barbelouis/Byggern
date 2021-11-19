@@ -7,7 +7,7 @@
  *
  */
 
-#include "can_driver.h"
+#include "/home/louis/Documents/NTNU/TTK4155/Byggern/node1/CAN_driver.h"
 #include "game.h"
 
 /**

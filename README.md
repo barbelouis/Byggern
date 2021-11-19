@@ -10,8 +10,10 @@ TTK4155 Industrielle og innbygde datasystemers konstruksjon (2021 HØST) - Group
 
 - Lot of issues related to the CAN delayed us.
 
+- Faulty arduino Due
+
 ### To finish
 -To be defined
 
-### Futur work and work that we wish we had done if we had more time
+### Future work and work that we wish we had done if we had more time
 -Control the system with an Android phone over Bluetooth

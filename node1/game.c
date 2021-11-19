@@ -52,14 +52,15 @@ void game_init(int lives)
  */
 void game_start()
 {
-
+printf("hey\n");
 	int difficulty = 7;
 
 	switch (game_status)
 	{
 	case 'T': //(T)itle
+	printf("Title\n");
 		game_init(3);
-
+	
 		OLED_print_title();
 		_delay_ms(1500);
 
@@ -73,7 +74,7 @@ void game_start()
 		break;
 
 	case 'H': //(H)ome
-
+	printf("home\n");
 		menu = make_menu(current_option, selected_option);
 		current_option = menu.current_option;
 		selected_option = menu.selected_option;
@@ -94,12 +95,14 @@ void game_start()
 		break;
 
 	case 'A': //(A)nimation
+	printf("animation\n");
 		OLED_start_animation();
 		OLED_reset();
 		game_status = 'P';
 		break;
 
 	case 'P': //(P)lay
+	printf("play\n");
 		send_sensors_data_to_node2();
 		if (!is_goal())
 		{
@@ -119,6 +122,7 @@ void game_start()
 		break;
 
 	case 'O': //(O)ver
+	printf("over\n");
 		OLED_game_over();
 		if (get_joystick_press())
 		{
@@ -128,10 +132,25 @@ void game_start()
 		break;
 
 	case 'C': //(C)alibration
+	printf("calibration\n");
 		OLED_reset();
 		OLED_calibration();
 		game_status = 'H';
 		break;
+	default:
+	printf("default\n");
+	game_init(3);
+	
+		OLED_print_title();
+		_delay_ms(1500);
+
+		game_status = 'H';
+		OLED_reset();
+		if (get_joystick_press())
+		{
+			OLED_reset();
+			game_status = 'H';
+		}
 	}
 }
 

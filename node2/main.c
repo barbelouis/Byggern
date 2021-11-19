@@ -50,7 +50,7 @@ int main()
   encoder_init();
   timer_init();
   servo_init();
-  //motor_calibration();
+  motor_calibration();
   timer_enable();
   ADC_init();
 
@@ -63,26 +63,26 @@ int main()
   //time_t now = time(0); // Get the system time
   while (1)
   {
-   
+
     if (ADC_boolean_read())
     {
-        printf("GOAL!\n\r");
-        can_send(&can_msg, 0);
+      printf("GOAL!\n\r");
+      can_send(&can_msg, 0);
     }
-      //delayms(1000);
-      //solenoid_hit();
-      //printf("HIT\n\r");
-      //printf("message sent\n\r");
+    //delayms(1000);
+    //solenoid_hit();
+    //printf("HIT\n\r");
+    //printf("message sent\n\r");
 
-      //can_send(&can_msg, 0);
-      //printf("Message sent\n\r");
-      //printf("Range: %x\n\r", range);
-      //motor_PID(30, range);
-      //PID_controller(30, range);
-      //delayms(500);
-      // now = time(0);
-      //printf("time %d\n\r", now);
+    //can_send(&can_msg, 0);
+    //printf("Message sent\n\r");
+    //printf("Range: %x\n\r", range);
+    //motor_PID(30, range);
+    //PID_controller(30, range);
+    //delayms(500);
+    // now = time(0);
+    //printf("time %d\n\r", now);
 
-      //ADC_get_value();
+    //ADC_get_value();
   }
 }

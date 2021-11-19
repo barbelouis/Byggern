@@ -62,6 +62,6 @@ int main(void)
 
         _delay_ms(200);
 
-        check_can_message();
+        //check_can_message();
         }
 }

@@ -49,6 +49,9 @@ void motor_init()
 	//init DACC
 	DACC->DACC_MR |= DACC_MR_USER_SEL_CHANNEL1;
 	DACC->DACC_CHER |= DACC_CHER_CH1;
+
+	//motor_drive_right(1800);
+	//encoder_reset();
 }
 
 /**
@@ -108,14 +111,14 @@ void motor_stop()
  */
 uint32_t motor_calibration()
 {
-	motor_drive_right(900);
+	motor_drive_right(1200);
 	delayms(2000);
 	//motor_stop();
 	//delayms(1000);
 	encoder_reset();
 	printf("right: %x", encoder_read());
 
-	motor_drive_left(900);
+	motor_drive_left(1200);
 	delayms(2000);
 	//motor_stop();
 	//delayms(1000);
@@ -157,7 +160,12 @@ uint32_t map(uint32_t x, uint32_t in_min, uint32_t in_max, uint32_t out_min, uin
 void motor_PID(int target, int range)
 {
 	int encoder = encoder_read();
-
+	
+	if(encoder>=range+1000){
+		encoder=0;
+		encoder_reset();
+	}
+	printf("encodeur: %d | ", encoder);
 	int position = map(encoder, 0, range, 0, 255);
 	int pid_result = PID_controller(target, position);
 
