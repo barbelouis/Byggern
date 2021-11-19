@@ -12,8 +12,6 @@ TTK4155 Industrielle og innbygde datasystemers konstruksjon (2021 HØST) - Group
 
 - Faulty arduino Due
 
-### To finish
--To be defined
 
 ### Future work and work that we wish we had done if we had more time
 -Control the system with an Android phone over Bluetooth
